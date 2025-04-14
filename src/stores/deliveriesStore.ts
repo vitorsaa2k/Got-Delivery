@@ -1,0 +1,39 @@
+import { create } from "zustand";
+import { Motoboy } from "./motoboyStore";
+
+export type SourceType = "Ifood" | "PedeAi" | "WhatsApp";
+
+export interface Delivery {
+	id: string;
+	finalValue: number;
+	neighborhood: string;
+	source: SourceType;
+	motoboy: Motoboy;
+}
+
+interface DeliveryState {
+	deliveryList: Delivery[];
+	addDelivery: (delivery: Delivery) => void;
+	removeDelivery: (delivery: Delivery) => void;
+	updateDelivery: (delivery: Delivery, updatedDelivery: Delivery) => void;
+}
+
+export const useDeliveriesStore = create<DeliveryState>()(set => ({
+	deliveryList: [],
+	addDelivery: (delivery: Delivery) =>
+		set(state => ({ deliveryList: [...state.deliveryList, delivery] })),
+	removeDelivery: (delivery: Delivery) =>
+		set(state => {
+			const index = state.deliveryList.findIndex(i => i.id === delivery.id);
+			state.deliveryList.splice(index, 1);
+			const newList = [...state.deliveryList];
+			return { deliveryList: newList };
+		}),
+	updateDelivery: (delivery: Delivery, updatedDelivery: Delivery) =>
+		set(state => {
+			const index = state.deliveryList.findIndex(i => i.id === delivery.id);
+			const newList = state.deliveryList;
+			newList[index] = updatedDelivery;
+			return { deliveryList: newList };
+		}),
+}));
