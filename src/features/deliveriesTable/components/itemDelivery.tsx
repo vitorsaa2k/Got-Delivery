@@ -9,7 +9,7 @@ export function ItemDelivery({ delivery }: { delivery: Delivery }) {
 		removeDelivery(delivery);
 	}, [delivery, removeDelivery]);
 	return (
-		<div className="border border-black" key={delivery.id}>
+		<div className="border border-black p-2 rounded" key={delivery.id}>
 			<p>Valor: {delivery.finalValue}</p>
 			<p>Bairro: {delivery.neighborhood}</p>
 			<p>Plataforma: {delivery.source}</p>
