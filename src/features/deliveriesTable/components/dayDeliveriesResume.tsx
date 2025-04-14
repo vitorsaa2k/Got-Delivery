@@ -37,7 +37,7 @@ export function DayDeliveriesResume() {
 	}, [eachMotoboyAmount, allMotoboys]);
 
 	return (
-		<div>
+		<div className="m-2">
 			<p>Valor total: {totalValue}</p>
 			<p>Total deliverys: {totalDeliveries}</p>
 			<div>
