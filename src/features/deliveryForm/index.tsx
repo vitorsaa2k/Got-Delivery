@@ -58,7 +58,7 @@ export function DeliveryForm() {
 		[]
 	);
 	return (
-		<>
+		<div className="m-2">
 			<DeliveryValueInput
 				deliveryValue={deliveryValue}
 				handleDeliveryValueChange={handleDeliveryValueChange}
@@ -75,6 +75,6 @@ export function DeliveryForm() {
 					Confirmar
 				</Button>
 			</div>
-		</>
+		</div>
 	);
 }
