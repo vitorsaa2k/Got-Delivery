@@ -36,8 +36,6 @@ export function ComboboxMotoboy() {
 		[motoboyList, selectMotoboy]
 	);
 
-	console.log(useMotoboyStore(state => state.motoboyList));
-
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
 			<PopoverTrigger asChild>
