@@ -7,8 +7,8 @@ import { DeliverySourceInput } from "./components/inputs/source";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { useMotoboyStore } from "@/stores/motoboyStore";
 import { useDeliveriesStore } from "@/stores/deliveriesStore";
-import { v4 as uuid } from "uuid";
-import { Delivery, SourceType } from "@/types/global/types";
+import { SourceType } from "@/types/global/types";
+import { CreateDelivery } from "@/types/global/create";
 
 export function DeliveryForm() {
 	const [deliveryValue, setDeliveryValue] = useState<string>("");
@@ -19,16 +19,15 @@ export function DeliveryForm() {
 	const addDelivery = useDeliveriesStore(state => state.addDelivery);
 	const handleAddDelivery = useCallback(async () => {
 		if (!selectedMotoboy) return console.log("Selecione o motoboy");
-		const delivery: Delivery = {
+		const delivery: CreateDelivery = {
 			finalValue: parseInt(deliveryValue),
 			neighborhood: neighborhood,
 			source,
-			id: uuid(),
 			motoboy: selectedMotoboy,
 			motoboyId: selectedMotoboy.id,
 			date: new Date(),
 		};
-		addDelivery(delivery);
+		await addDelivery(delivery);
 	}, [addDelivery, source, neighborhood, deliveryValue, selectedMotoboy]);
 
 	const handleSelectChange = useCallback((e: SourceType) => {
