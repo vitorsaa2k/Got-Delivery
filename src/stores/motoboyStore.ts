@@ -1,37 +1,31 @@
 import { create } from "zustand";
-
-export interface Motoboy {
-	name: string;
-	pix: string;
-}
+import { Motoboy } from "@/types/global/types";
+import { CreateMotoboy } from "@/types/global/create";
 
 interface MotoboyState {
 	motoboyList: Motoboy[];
 	selectedMotoboy: Motoboy | null;
-	addMotoboy: (motoboy: Motoboy) => void;
+	addMotoboy: (motoboy: CreateMotoboy) => Promise<void>;
 	removeMoboboy: (motoboy: Motoboy) => void;
 	updateMotoboy: (motoboy: Motoboy, updatedMotoboy: Motoboy) => void;
 	selectMotoboy: (motoboy: Motoboy) => void;
 }
 
 export const useMotoboyStore = create<MotoboyState>()(set => ({
-	motoboyList: [
-		{
-			name: "Vitor",
-			pix: "Vitor",
-		},
-		{
-			name: "Neto",
-			pix: "705.358.654-57",
-		},
-		{
-			name: "Morais",
-			pix: "Morais",
-		},
-	],
+	motoboyList: [],
 	selectedMotoboy: null,
-	addMotoboy: (motoboy: Motoboy) =>
-		set(state => ({ motoboyList: [...state.motoboyList, motoboy] })),
+	addMotoboy: async (motoboy: CreateMotoboy) => {
+		const body = JSON.stringify(motoboy);
+		let returnedMotoboy: Motoboy;
+		await fetch("/api/motoboy", { body, method: "POST" })
+			.then(res => res.json())
+			.then((data: Motoboy) => {
+				returnedMotoboy = data;
+			});
+		return set(state => ({
+			motoboyList: [...state.motoboyList, returnedMotoboy],
+		}));
+	},
 	removeMoboboy: (motoboy: Motoboy) =>
 		set(state => {
 			const index = state.motoboyList.findIndex(i => i.name === motoboy.name);
