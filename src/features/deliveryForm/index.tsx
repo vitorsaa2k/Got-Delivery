@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import { DeliveryValueInput } from "./components/inputs/deliveryValue";
 import { SelectMotoboyInput } from "./components/inputs/motoboy";
@@ -7,12 +6,9 @@ import { NeighborhoodInput } from "./components/inputs/neighborhood";
 import { DeliverySourceInput } from "./components/inputs/source";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { useMotoboyStore } from "@/stores/motoboyStore";
-import {
-	Delivery,
-	SourceType,
-	useDeliveriesStore,
-} from "@/stores/deliveriesStore";
+import { useDeliveriesStore } from "@/stores/deliveriesStore";
 import { v4 as uuid } from "uuid";
+import { Delivery, SourceType } from "@/types/global/types";
 
 export function DeliveryForm() {
 	const [deliveryValue, setDeliveryValue] = useState<string>("");
@@ -21,7 +17,7 @@ export function DeliveryForm() {
 	const selectedMotoboy = useMotoboyStore(state => state.selectedMotoboy);
 	const deliveries = useDeliveriesStore(state => state.deliveryList);
 	const addDelivery = useDeliveriesStore(state => state.addDelivery);
-	const handleAddDelivery = useCallback(() => {
+	const handleAddDelivery = useCallback(async () => {
 		if (!selectedMotoboy) return console.log("Selecione o motoboy");
 		const delivery: Delivery = {
 			finalValue: parseInt(deliveryValue),
@@ -29,6 +25,8 @@ export function DeliveryForm() {
 			source,
 			id: uuid(),
 			motoboy: selectedMotoboy,
+			motoboyId: selectedMotoboy.id,
+			date: new Date(),
 		};
 		addDelivery(delivery);
 	}, [addDelivery, source, neighborhood, deliveryValue, selectedMotoboy]);
