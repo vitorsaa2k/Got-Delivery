@@ -9,6 +9,7 @@ interface MotoboyState {
 	removeMoboboy: (motoboy: Motoboy) => void;
 	updateMotoboy: (motoboy: Motoboy, updatedMotoboy: Motoboy) => void;
 	selectMotoboy: (motoboy: Motoboy) => void;
+	fetchAllMotoboys: () => Promise<Motoboy[]>;
 }
 
 export const useMotoboyStore = create<MotoboyState>()(set => ({
@@ -41,4 +42,11 @@ export const useMotoboyStore = create<MotoboyState>()(set => ({
 		}),
 	selectMotoboy: (motoboy: Motoboy) =>
 		set(() => ({ selectedMotoboy: motoboy })),
+	fetchAllMotoboys: async () => {
+		const motoboyList = await fetch("/api/motoboy")
+			.then(res => res.json())
+			.then((data: Motoboy[]) => data);
+		set(() => ({ motoboyList }));
+		return motoboyList;
+	},
 }));
