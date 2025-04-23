@@ -1,15 +1,5 @@
+import { Delivery } from "@/types/global/types";
 import { create } from "zustand";
-import { Motoboy } from "./motoboyStore";
-
-export type SourceType = "Ifood" | "PedeAi" | "WhatsApp";
-
-export interface Delivery {
-	id: string;
-	finalValue: number;
-	neighborhood: string;
-	source: SourceType;
-	motoboy: Motoboy;
-}
 
 interface DeliveryState {
 	deliveryList: Delivery[];
