@@ -17,7 +17,7 @@ export async function GET(
 ) {
 	const { date } = await params;
 	const { start, end, error } = getDateRange(await date);
-	if (error) return NextResponse.json({ error });
+	if (error) return NextResponse.json({ error }, { status: 400 });
 	const deliveries = await prisma.delivery.findMany({
 		where: {
 			date: {
