@@ -1,8 +1,9 @@
 import prisma from "@/lib/prisma";
+import { removeTimeFromDate } from "@/utils/removeTimeDate";
 import { NextRequest, NextResponse } from "next/server";
 
 function getDateRange(day: string) {
-	const parsedDate = day.split("T").shift();
+	const parsedDate = removeTimeFromDate(day);
 	if (parsedDate === undefined)
 		return { start: new Date(), end: new Date(), error: true };
 	const start = new Date(parsedDate);
@@ -29,5 +30,5 @@ export async function GET(
 			motoboy: true,
 		},
 	});
-	return NextResponse.json({ deliveries, error });
+	return NextResponse.json(deliveries);
 }

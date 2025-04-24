@@ -7,7 +7,7 @@ interface DeliveryState {
 	addDelivery: (delivery: CreateDelivery) => Promise<void>;
 	removeDelivery: (delivery: Delivery) => void;
 	updateDelivery: (delivery: Delivery, updatedDelivery: Delivery) => void;
-	fetchAllDeliveries: () => Promise<Delivery[]>;
+	fetchAllDeliveriesByDate: (date: string) => Promise<Delivery[]>;
 }
 
 export const useDeliveriesStore = create<DeliveryState>()(set => ({
@@ -36,8 +36,8 @@ export const useDeliveriesStore = create<DeliveryState>()(set => ({
 			newList[index] = updatedDelivery;
 			return { deliveryList: newList };
 		}),
-	fetchAllDeliveries: async () => {
-		const deliveryList = await fetch("/api/delivery")
+	fetchAllDeliveriesByDate: async (date: string) => {
+		const deliveryList = await fetch(`/api/delivery/date/${date}`)
 			.then(res => res.json())
 			.then((data: Delivery[]) => data);
 		set(() => ({ deliveryList }));

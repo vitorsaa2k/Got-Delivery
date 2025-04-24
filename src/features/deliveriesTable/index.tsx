@@ -5,12 +5,12 @@ import { useEffect } from "react";
 
 export function DeliveryTable() {
 	const deliveryList = useDeliveriesStore(state => state.deliveryList);
-	const fetchAllDeliveries = useDeliveriesStore(
-		state => state.fetchAllDeliveries
+	const fetchAllDeliveriesByDate = useDeliveriesStore(
+		state => state.fetchAllDeliveriesByDate
 	);
 	useEffect(() => {
-		fetchAllDeliveries();
-	}, [fetchAllDeliveries]);
+		fetchAllDeliveriesByDate(new Date().toISOString());
+	}, [fetchAllDeliveriesByDate]);
 	return (
 		<div className="grid gap-2 grid-cols-4 m-2">
 			{deliveryList.map(delivery => (
