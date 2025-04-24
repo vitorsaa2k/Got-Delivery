@@ -3,7 +3,12 @@ import { Delivery } from "@/types/global/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
-	const deliveries = await prisma.delivery.findMany();
+	const deliveries = await prisma.delivery.findMany({
+		include: {
+			motoboy: true,
+		},
+	});
+	console.log(deliveries);
 	return NextResponse.json(deliveries);
 }
 
