@@ -9,6 +9,7 @@ import { useMotoboyStore } from "@/stores/motoboyStore";
 import { useDeliveriesStore } from "@/stores/deliveriesStore";
 import { SourceType } from "@/types/global/types";
 import { CreateDelivery } from "@/types/global/create";
+import { DateSelector } from "./components/dateSelector";
 
 export function DeliveryForm() {
 	const [deliveryValue, setDeliveryValue] = useState<string>("");
@@ -56,6 +57,7 @@ export function DeliveryForm() {
 	);
 	return (
 		<div className="m-2">
+			<DateSelector />
 			<DeliveryValueInput
 				deliveryValue={deliveryValue}
 				handleDeliveryValueChange={handleDeliveryValueChange}
