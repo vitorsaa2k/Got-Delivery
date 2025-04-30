@@ -37,7 +37,7 @@ export function DateButton() {
 				<Button
 					variant={"outline"}
 					className={cn(
-						"w-[280px] justify-start text-left font-normal",
+						"w-[164px] justify-start text-left font-normal",
 						!date && "text-muted-foreground"
 					)}
 				>
