@@ -20,7 +20,7 @@ export function DeliveryForm({ initialDelivery }: DeliveryFormTypes) {
 	const [source, setSource] = useState<SourceType>("Ifood");
 	const selectMotoboy = useMotoboyStore(state => state.selectMotoboy);
 	const selectedMotoboy = useMotoboyStore(state => state.selectedMotoboy);
-	const addDelivery = useDeliveriesStore(state => state.addDelivery);
+	const postDelivery = useDeliveriesStore(state => state.postDelivery);
 	const handlePostDelivery = useCallback(async () => {
 		if (!selectedMotoboy) return console.log("Selecione o motoboy");
 		if (initialDelivery) {
@@ -33,7 +33,7 @@ export function DeliveryForm({ initialDelivery }: DeliveryFormTypes) {
 				motoboyId: selectedMotoboy.id,
 				date: new Date(),
 			};
-			return await addDelivery(delivery);
+			return await postDelivery(delivery);
 		}
 		const delivery: CreateDelivery = {
 			finalValue: parseInt(deliveryValue),
@@ -43,9 +43,9 @@ export function DeliveryForm({ initialDelivery }: DeliveryFormTypes) {
 			motoboyId: selectedMotoboy.id,
 			date: new Date(),
 		};
-		await addDelivery(delivery);
+		await postDelivery(delivery);
 	}, [
-		addDelivery,
+		postDelivery,
 		source,
 		neighborhood,
 		deliveryValue,

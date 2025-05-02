@@ -4,7 +4,7 @@ import { create } from "zustand";
 
 interface DeliveryState {
 	deliveryList: Delivery[];
-	addDelivery: (delivery: CreateDelivery) => Promise<void>;
+	postDelivery: (delivery: CreateDelivery) => Promise<void>;
 	removeDelivery: (delivery: Delivery) => void;
 	updateDelivery: (delivery: Delivery, updatedDelivery: Delivery) => void;
 	fetchAllDeliveriesByDate: (date: string) => Promise<Delivery[]>;
@@ -12,7 +12,7 @@ interface DeliveryState {
 
 export const useDeliveriesStore = create<DeliveryState>()(set => ({
 	deliveryList: [],
-	addDelivery: async (delivery: CreateDelivery) => {
+	postDelivery: async (delivery: CreateDelivery) => {
 		const body = JSON.stringify(delivery);
 		const returnedDelivery = await fetch("/api/delivery", {
 			body,
