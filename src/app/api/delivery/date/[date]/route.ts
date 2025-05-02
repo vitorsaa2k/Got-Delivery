@@ -14,7 +14,7 @@ function getDateRange(day: string) {
 
 export async function GET(
 	req: NextRequest,
-	{ params }: { params: { date: string } }
+	{ params }: { params: Promise<{ date: string }> }
 ) {
 	const { date } = await params;
 	const { start, end, error } = getDateRange(await date);
