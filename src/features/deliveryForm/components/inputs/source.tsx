@@ -5,7 +5,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { SourceType } from "@/stores/deliveriesStore";
+import { SourceType } from "@/types/global/types";
 
 interface DeliverySourceTypes {
 	handleSelectChange: (value: SourceType) => void;

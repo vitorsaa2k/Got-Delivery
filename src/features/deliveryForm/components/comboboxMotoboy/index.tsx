@@ -10,15 +10,13 @@ import { Button } from "../../../../components/ui/button";
 import {
 	Command,
 	CommandEmpty,
-	CommandGroup,
 	CommandInput,
-	CommandItem,
 	CommandList,
 } from "../../../../components/ui/command";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { ChevronsUpDown } from "lucide-react";
 import { useMotoboyStore } from "@/stores/motoboyStore";
 import { AddMotoboyDialog } from "./addMotoboyDialog";
+import { MotoboyList } from "./motoboyList";
 
 export function ComboboxMotoboy() {
 	const [open, setOpen] = useState(false);
@@ -59,27 +57,12 @@ export function ComboboxMotoboy() {
 							<p>Nenhum Motoboy encontrado</p>
 							<AddMotoboyDialog />
 						</CommandEmpty>
-						<CommandGroup>
-							{motoboyList.map(motoboy => (
-								<CommandItem
-									key={motoboy.name}
-									value={motoboy.name}
-									onSelect={currentValue => {
-										setValue(currentValue === value ? "" : currentValue);
-										handleSelect(currentValue);
-										setOpen(false);
-									}}
-								>
-									<Check
-										className={cn(
-											"mr-2 h-4 w-4",
-											value === motoboy.name ? "opacity-100" : "opacity-0"
-										)}
-									/>
-									{motoboy.name}
-								</CommandItem>
-							))}
-						</CommandGroup>
+						<MotoboyList
+							handleSelect={handleSelect}
+							setOpen={setOpen}
+							setValue={setValue}
+							value={value}
+						/>
 					</CommandList>
 				</Command>
 			</PopoverContent>

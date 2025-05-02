@@ -1,27 +1,27 @@
+import { CreateDelivery } from "@/types/global/create";
+import { Delivery } from "@/types/global/types";
 import { create } from "zustand";
-import { Motoboy } from "./motoboyStore";
-
-export type SourceType = "Ifood" | "PedeAi" | "WhatsApp";
-
-export interface Delivery {
-	id: string;
-	finalValue: number;
-	neighborhood: string;
-	source: SourceType;
-	motoboy: Motoboy;
-}
 
 interface DeliveryState {
 	deliveryList: Delivery[];
-	addDelivery: (delivery: Delivery) => void;
+	addDelivery: (delivery: CreateDelivery) => Promise<void>;
 	removeDelivery: (delivery: Delivery) => void;
 	updateDelivery: (delivery: Delivery, updatedDelivery: Delivery) => void;
+	fetchAllDeliveriesByDate: (date: string) => Promise<Delivery[]>;
 }
 
 export const useDeliveriesStore = create<DeliveryState>()(set => ({
 	deliveryList: [],
-	addDelivery: (delivery: Delivery) =>
-		set(state => ({ deliveryList: [...state.deliveryList, delivery] })),
+	addDelivery: async (delivery: CreateDelivery) => {
+		const body = JSON.stringify(delivery);
+		const returnedDelivery = await fetch("/api/delivery", {
+			body,
+			method: "POST",
+		})
+			.then(res => res.json())
+			.then((data: Delivery) => data);
+		set(state => ({ deliveryList: [...state.deliveryList, returnedDelivery] }));
+	},
 	removeDelivery: (delivery: Delivery) =>
 		set(state => {
 			const index = state.deliveryList.findIndex(i => i.id === delivery.id);
@@ -36,4 +36,11 @@ export const useDeliveriesStore = create<DeliveryState>()(set => ({
 			newList[index] = updatedDelivery;
 			return { deliveryList: newList };
 		}),
+	fetchAllDeliveriesByDate: async (date: string) => {
+		const deliveryList = await fetch(`/api/delivery/date/${date}`)
+			.then(res => res.json())
+			.then((data: Delivery[]) => data);
+		set(() => ({ deliveryList }));
+		return deliveryList;
+	},
 }));

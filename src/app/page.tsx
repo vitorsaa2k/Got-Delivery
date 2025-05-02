@@ -1,13 +1,16 @@
-import { DeliveryTable } from "@/features/deliveriesTable";
-import { DayDeliveriesResume } from "@/features/deliveriesTable/components/dayDeliveriesResume";
-import { DeliveryForm } from "@/features/deliveryForm";
+"use client";
+import { removeTimeFromDate } from "@/utils/removeTimeDate";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
-	return (
-		<main>
-			<DeliveryForm />
-			<DeliveryTable />
-			<DayDeliveriesResume />
-		</main>
-	);
+	const router = useRouter();
+	useEffect(() => {
+		router.push(
+			`/delivery/date/${removeTimeFromDate(
+				new Date().toISOString()
+			)}T00:00:00.000Z`
+		);
+	}, [router]);
+	return <main></main>;
 }

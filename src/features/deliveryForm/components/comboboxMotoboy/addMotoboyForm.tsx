@@ -7,6 +7,9 @@ export function AddMotoboyForm() {
 	const [name, setName] = useState<string>("");
 	const [pix, setPix] = useState<string>("");
 	const addMotoboy = useMotoboyStore(state => state.addMotoboy);
+	async function handleAddMotoboy() {
+		await addMotoboy({ name, pix });
+	}
 
 	return (
 		<>
@@ -22,10 +25,7 @@ export function AddMotoboyForm() {
 				type="text"
 				placeholder="Chave Pix"
 			/>
-			<Button
-				className="hover:cursor-pointer"
-				onClick={() => addMotoboy({ pix, name })}
-			>
+			<Button className="hover:cursor-pointer" onClick={handleAddMotoboy}>
 				Adicionar Motoboy
 			</Button>
 		</>

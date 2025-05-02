@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Delivery, useDeliveriesStore } from "@/stores/deliveriesStore";
+import { useDeliveriesStore } from "@/stores/deliveriesStore";
+import { Delivery } from "@/types/global/types";
 import { useCallback } from "react";
 
 export function ItemDelivery({ delivery }: { delivery: Delivery }) {

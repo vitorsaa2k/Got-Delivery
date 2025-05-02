@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import { DeliveryValueInput } from "./components/inputs/deliveryValue";
 import { SelectMotoboyInput } from "./components/inputs/motoboy";
@@ -7,12 +6,10 @@ import { NeighborhoodInput } from "./components/inputs/neighborhood";
 import { DeliverySourceInput } from "./components/inputs/source";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { useMotoboyStore } from "@/stores/motoboyStore";
-import {
-	Delivery,
-	SourceType,
-	useDeliveriesStore,
-} from "@/stores/deliveriesStore";
-import { v4 as uuid } from "uuid";
+import { useDeliveriesStore } from "@/stores/deliveriesStore";
+import { SourceType } from "@/types/global/types";
+import { CreateDelivery } from "@/types/global/create";
+import { DateSelector } from "./components/dateSelector";
 
 export function DeliveryForm() {
 	const [deliveryValue, setDeliveryValue] = useState<string>("");
@@ -21,16 +18,17 @@ export function DeliveryForm() {
 	const selectedMotoboy = useMotoboyStore(state => state.selectedMotoboy);
 	const deliveries = useDeliveriesStore(state => state.deliveryList);
 	const addDelivery = useDeliveriesStore(state => state.addDelivery);
-	const handleAddDelivery = useCallback(() => {
+	const handleAddDelivery = useCallback(async () => {
 		if (!selectedMotoboy) return console.log("Selecione o motoboy");
-		const delivery: Delivery = {
+		const delivery: CreateDelivery = {
 			finalValue: parseInt(deliveryValue),
 			neighborhood: neighborhood,
 			source,
-			id: uuid(),
 			motoboy: selectedMotoboy,
+			motoboyId: selectedMotoboy.id,
+			date: new Date(),
 		};
-		addDelivery(delivery);
+		await addDelivery(delivery);
 	}, [addDelivery, source, neighborhood, deliveryValue, selectedMotoboy]);
 
 	const handleSelectChange = useCallback((e: SourceType) => {
@@ -59,6 +57,7 @@ export function DeliveryForm() {
 	);
 	return (
 		<div className="m-2">
+			<DateSelector />
 			<DeliveryValueInput
 				deliveryValue={deliveryValue}
 				handleDeliveryValueChange={handleDeliveryValueChange}
