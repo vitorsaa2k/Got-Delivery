@@ -7,19 +7,34 @@ import { DeliverySourceInput } from "./components/inputs/source";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { useMotoboyStore } from "@/stores/motoboyStore";
 import { useDeliveriesStore } from "@/stores/deliveriesStore";
-import { SourceType } from "@/types/global/types";
+import { Delivery, SourceType } from "@/types/global/types";
 import { CreateDelivery } from "@/types/global/create";
-import { DateSelector } from "./components/dateSelector";
 
-export function DeliveryForm() {
+interface DeliveryFormTypes {
+	initialDelivery?: Delivery;
+}
+
+export function DeliveryForm({ initialDelivery }: DeliveryFormTypes) {
 	const [deliveryValue, setDeliveryValue] = useState<string>("");
 	const [neighborhood, setNeighborhood] = useState<string>("");
 	const [source, setSource] = useState<SourceType>("Ifood");
+	const selectMotoboy = useMotoboyStore(state => state.selectMotoboy);
 	const selectedMotoboy = useMotoboyStore(state => state.selectedMotoboy);
-	const deliveries = useDeliveriesStore(state => state.deliveryList);
 	const addDelivery = useDeliveriesStore(state => state.addDelivery);
-	const handleAddDelivery = useCallback(async () => {
+	const handlePostDelivery = useCallback(async () => {
 		if (!selectedMotoboy) return console.log("Selecione o motoboy");
+		if (initialDelivery) {
+			const delivery: Delivery = {
+				id: initialDelivery.id,
+				finalValue: parseInt(deliveryValue),
+				neighborhood: neighborhood,
+				source,
+				motoboy: selectedMotoboy,
+				motoboyId: selectedMotoboy.id,
+				date: new Date(),
+			};
+			return await addDelivery(delivery);
+		}
 		const delivery: CreateDelivery = {
 			finalValue: parseInt(deliveryValue),
 			neighborhood: neighborhood,
@@ -29,14 +44,27 @@ export function DeliveryForm() {
 			date: new Date(),
 		};
 		await addDelivery(delivery);
-	}, [addDelivery, source, neighborhood, deliveryValue, selectedMotoboy]);
+	}, [
+		addDelivery,
+		source,
+		neighborhood,
+		deliveryValue,
+		selectedMotoboy,
+		initialDelivery,
+	]);
 
 	const handleSelectChange = useCallback((e: SourceType) => {
 		setSource(e);
 	}, []);
 	useEffect(() => {
-		console.log(deliveries, "deliveries");
-	}, [deliveries]);
+		if (initialDelivery) {
+			console.log(initialDelivery);
+			setDeliveryValue(`${initialDelivery.finalValue}`);
+			setNeighborhood(initialDelivery.neighborhood);
+			setSource(initialDelivery.source);
+			selectMotoboy(initialDelivery.motoboy);
+		}
+	}, [initialDelivery, selectMotoboy]);
 
 	const handleDeliveryValueChange = useCallback(
 		(e: ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +85,6 @@ export function DeliveryForm() {
 	);
 	return (
 		<div className="m-2">
-			<DateSelector />
 			<DeliveryValueInput
 				deliveryValue={deliveryValue}
 				handleDeliveryValueChange={handleDeliveryValueChange}
@@ -67,10 +94,13 @@ export function DeliveryForm() {
 				handleNeighborhoodChange={handleNeighborhoodChange}
 			/>
 
-			<DeliverySourceInput handleSelectChange={handleSelectChange} />
+			<DeliverySourceInput
+				value={source}
+				handleSelectChange={handleSelectChange}
+			/>
 			<SelectMotoboyInput />
 			<div>
-				<Button className="hover:cursor-pointer" onClick={handleAddDelivery}>
+				<Button className="hover:cursor-pointer" onClick={handlePostDelivery}>
 					Confirmar
 				</Button>
 			</div>

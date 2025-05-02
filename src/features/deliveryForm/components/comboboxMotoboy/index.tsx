@@ -21,6 +21,7 @@ import { MotoboyList } from "./motoboyList";
 export function ComboboxMotoboy() {
 	const [open, setOpen] = useState(false);
 	const [value, setValue] = useState("");
+	const selectedMotoboy = useMotoboyStore(state => state.selectedMotoboy);
 
 	const motoboyList = useMotoboyStore(state => state.motoboyList);
 	const selectMotoboy = useMotoboyStore(state => state.selectMotoboy);
@@ -43,9 +44,7 @@ export function ComboboxMotoboy() {
 					aria-expanded={open}
 					className="w-[200px] justify-between border border-slate-400 hover:cursor-pointer"
 				>
-					{value
-						? motoboyList.find(motoboy => motoboy.name === value)?.name
-						: "Selecionar Motoboy."}
+					{selectedMotoboy ? selectedMotoboy.name : "Selecionar Motoboy."}
 					<ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
 				</Button>
 			</PopoverTrigger>
@@ -61,7 +60,7 @@ export function ComboboxMotoboy() {
 							handleSelect={handleSelect}
 							setOpen={setOpen}
 							setValue={setValue}
-							value={value}
+							value={selectedMotoboy?.name ?? value}
 						/>
 					</CommandList>
 				</Command>
