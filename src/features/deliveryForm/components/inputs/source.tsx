@@ -8,16 +8,18 @@ import {
 import { SourceType } from "@/types/global/types";
 
 interface DeliverySourceTypes {
+	value?: SourceType;
 	handleSelectChange: (value: SourceType) => void;
 }
 
 export function DeliverySourceInput({
+	value,
 	handleSelectChange,
 }: DeliverySourceTypes) {
 	return (
 		<>
 			<label>Plataforma</label>
-			<Select onValueChange={handleSelectChange}>
+			<Select value={value} onValueChange={handleSelectChange}>
 				<SelectTrigger className="w-[180px]">
 					<SelectValue placeholder="Plataforma" />
 				</SelectTrigger>
