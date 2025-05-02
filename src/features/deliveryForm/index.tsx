@@ -9,12 +9,14 @@ import { useMotoboyStore } from "@/stores/motoboyStore";
 import { useDeliveriesStore } from "@/stores/deliveriesStore";
 import { Delivery, SourceType } from "@/types/global/types";
 import { CreateDelivery } from "@/types/global/create";
+import { toast } from "sonner";
 
 interface DeliveryFormTypes {
 	initialDelivery?: Delivery;
 }
 
 export function DeliveryForm({ initialDelivery }: DeliveryFormTypes) {
+	const [isFetching, setIsFetching] = useState<boolean>(false);
 	const [deliveryValue, setDeliveryValue] = useState<string>("");
 	const [neighborhood, setNeighborhood] = useState<string>("");
 	const [source, setSource] = useState<SourceType>("Ifood");
@@ -22,6 +24,7 @@ export function DeliveryForm({ initialDelivery }: DeliveryFormTypes) {
 	const selectedMotoboy = useMotoboyStore(state => state.selectedMotoboy);
 	const postDelivery = useDeliveriesStore(state => state.postDelivery);
 	const handlePostDelivery = useCallback(async () => {
+		setIsFetching(true);
 		if (!selectedMotoboy) return console.log("Selecione o motoboy");
 		if (initialDelivery) {
 			const delivery: Delivery = {
@@ -33,7 +36,10 @@ export function DeliveryForm({ initialDelivery }: DeliveryFormTypes) {
 				motoboyId: selectedMotoboy.id,
 				date: new Date(),
 			};
-			return await postDelivery(delivery);
+			return await postDelivery(delivery).then(() => {
+				setIsFetching(false);
+				toast("Delivery Atualizado Com Sucesso");
+			});
 		}
 		const delivery: CreateDelivery = {
 			finalValue: parseInt(deliveryValue),
@@ -43,7 +49,10 @@ export function DeliveryForm({ initialDelivery }: DeliveryFormTypes) {
 			motoboyId: selectedMotoboy.id,
 			date: new Date(),
 		};
-		await postDelivery(delivery);
+		return await postDelivery(delivery).then(() => {
+			setIsFetching(false);
+			toast("Delivery Criado Com Sucesso");
+		});
 	}, [
 		postDelivery,
 		source,
@@ -100,7 +109,11 @@ export function DeliveryForm({ initialDelivery }: DeliveryFormTypes) {
 			/>
 			<SelectMotoboyInput />
 			<div>
-				<Button className="hover:cursor-pointer" onClick={handlePostDelivery}>
+				<Button
+					disabled={isFetching}
+					className="hover:cursor-pointer"
+					onClick={handlePostDelivery}
+				>
 					Confirmar
 				</Button>
 			</div>
