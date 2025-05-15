@@ -15,3 +15,14 @@ export async function GET(
 
 	return NextResponse.json({ ...delivery }, { status: 200 });
 }
+export async function DELETE(
+	req: NextRequest,
+	{ params }: { params: Promise<{ id: string }> }
+) {
+	const { id } = await params;
+	const delivery = await prisma.delivery.delete({
+		where: { id },
+	});
+
+	return NextResponse.json(delivery, { status: 200 });
+}
