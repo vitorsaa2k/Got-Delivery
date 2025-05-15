@@ -16,6 +16,7 @@ interface DeliveryFormTypes {
 }
 
 export function DeliveryForm({ initialDelivery }: DeliveryFormTypes) {
+	//TODO Add useReducer to all these states
 	const [isFetching, setIsFetching] = useState<boolean>(false);
 	const [deliveryValue, setDeliveryValue] = useState<string>("");
 	const [neighborhood, setNeighborhood] = useState<string>("");
