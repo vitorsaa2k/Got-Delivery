@@ -16,7 +16,7 @@ export function NeighborhoodInput({
 			<Input
 				className="bg-white text-black"
 				type="text"
-				name="bairro"
+				name="neighborhood"
 				value={neighborhood}
 				onChange={handleNeighborhoodChange}
 			/>
