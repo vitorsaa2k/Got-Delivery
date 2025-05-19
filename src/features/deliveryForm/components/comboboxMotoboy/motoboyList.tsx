@@ -23,6 +23,7 @@ export function MotoboyList({
 		queryKey: ["motoboyList"],
 		queryFn: fetchAllMotoboys,
 		refetchOnMount: false,
+		refetchOnWindowFocus: false,
 	});
 	if (!motoboyList) return <></>;
 	return (
