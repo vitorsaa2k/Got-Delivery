@@ -1,30 +1,22 @@
 import { create } from "zustand";
 import { Motoboy } from "@/types/global/types";
-import { CreateMotoboy } from "@/types/global/create";
 
 interface MotoboyState {
 	motoboyList: Motoboy[];
 	selectedMotoboy: Motoboy | null;
-	addMotoboy: (motoboy: CreateMotoboy) => Promise<void>;
+	addMotoboy: (motoboy: Motoboy) => void;
 	removeMoboboy: (motoboy: Motoboy) => void;
 	updateMotoboy: (motoboy: Motoboy, updatedMotoboy: Motoboy) => void;
 	selectMotoboy: (motoboy: Motoboy) => void;
-	fetchAllMotoboys: () => Promise<Motoboy[]>;
+	updateMotoboyList: (motoboyList: Motoboy[]) => Motoboy[];
 }
 
 export const useMotoboyStore = create<MotoboyState>()(set => ({
 	motoboyList: [],
 	selectedMotoboy: null,
-	addMotoboy: async (motoboy: CreateMotoboy) => {
-		const body = JSON.stringify(motoboy);
-		let returnedMotoboy: Motoboy;
-		await fetch("/api/motoboy", { body, method: "POST" })
-			.then(res => res.json())
-			.then((data: Motoboy) => {
-				returnedMotoboy = data;
-			});
-		return set(state => ({
-			motoboyList: [...state.motoboyList, returnedMotoboy],
+	addMotoboy: (motoboy: Motoboy) => {
+		set(state => ({
+			motoboyList: [...state.motoboyList, motoboy],
 		}));
 	},
 	removeMoboboy: (motoboy: Motoboy) =>
@@ -42,10 +34,7 @@ export const useMotoboyStore = create<MotoboyState>()(set => ({
 		}),
 	selectMotoboy: (motoboy: Motoboy) =>
 		set(() => ({ selectedMotoboy: motoboy })),
-	fetchAllMotoboys: async () => {
-		const motoboyList = await fetch("/api/motoboy")
-			.then(res => res.json())
-			.then((data: Motoboy[]) => data);
+	updateMotoboyList: (motoboyList: Motoboy[]) => {
 		set(() => ({ motoboyList }));
 		return motoboyList;
 	},

@@ -10,16 +10,10 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { AddMotoboyForm } from "./addMotoboyForm";
-import { useEffect, useState } from "react";
-import { useMotoboyStore } from "@/stores/motoboyStore";
+import { useState } from "react";
 
 export function AddMotoboyDialog() {
 	const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
-	const motoboyList = useMotoboyStore(state => state.motoboyList);
-
-	useEffect(() => {
-		setIsDialogOpen(state => !state);
-	}, [motoboyList]);
 
 	return (
 		<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>

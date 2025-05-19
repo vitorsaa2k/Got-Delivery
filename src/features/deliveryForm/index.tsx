@@ -4,38 +4,45 @@ import { DeliveryValueInput } from "./components/inputs/deliveryValue";
 import { SelectMotoboyInput } from "./components/inputs/motoboy";
 import { NeighborhoodInput } from "./components/inputs/neighborhood";
 import { DeliverySourceInput } from "./components/inputs/source";
-import {
-	ChangeEvent,
-	useCallback,
-	useEffect,
-	useReducer,
-	useState,
-} from "react";
+import { ChangeEvent, useCallback, useEffect, useReducer } from "react";
 import { useMotoboyStore } from "@/stores/motoboyStore";
 import { useDeliveriesStore } from "@/stores/deliveriesStore";
 import { Delivery, SourceType } from "@/types/global/types";
 import { CreateDelivery } from "@/types/global/create";
 import { toast } from "sonner";
 import { initReducer, reducer } from "@/reducers/deliveryFormReducer";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { postDelivery } from "@/services/delivery";
 
 interface DeliveryFormComponentTypes {
 	initialDelivery?: Delivery;
 }
 
 export function DeliveryForm({ initialDelivery }: DeliveryFormComponentTypes) {
+	const addDelivery = useDeliveriesStore(state => state.addDelivery);
 	const [deliveryState, dispatch] = useReducer(
 		reducer,
 		initialDelivery,
 		initReducer
 	);
-	// TODO add TanStackQuery to handle server and fetching state.
-	const [isFetching, setIsFetching] = useState<boolean>(false);
+	const queryClient = useQueryClient();
+	const deliveryListMutator = useMutation({
+		mutationFn: async (delivery: CreateDelivery | Delivery) => {
+			return await postDelivery(delivery);
+		},
+		onSuccess: (data: Delivery) => {
+			if (initialDelivery) {
+				return toast("Delivery Atualizado Com Sucesso");
+			}
+			queryClient.invalidateQueries({ queryKey: ["deliveryList"] });
+			addDelivery(data);
+			toast("Delivery Criado Com Sucesso");
+		},
+	});
 	const selectMotoboy = useMotoboyStore(state => state.selectMotoboy);
 	const selectedMotoboy = useMotoboyStore(state => state.selectedMotoboy);
-	const postDelivery = useDeliveriesStore(state => state.postDelivery);
 	const handlePostDelivery = useCallback(async () => {
-		setIsFetching(true);
-		if (!selectedMotoboy) return console.log("Selecione o motoboy");
+		if (!selectedMotoboy) return toast("Selecione o motoboy");
 		if (initialDelivery) {
 			const delivery: Delivery = {
 				...deliveryState,
@@ -44,22 +51,15 @@ export function DeliveryForm({ initialDelivery }: DeliveryFormComponentTypes) {
 				motoboyId: selectedMotoboy.id,
 				date: new Date(),
 			};
-			return await postDelivery(delivery).then(() => {
-				setIsFetching(false);
-				toast("Delivery Atualizado Com Sucesso");
-			});
+			return deliveryListMutator.mutate(delivery);
 		}
-		const delivery: CreateDelivery = {
+		return deliveryListMutator.mutate({
 			...deliveryState,
+			date: new Date(),
 			motoboy: selectedMotoboy,
 			motoboyId: selectedMotoboy.id,
-			date: new Date(),
-		};
-		return await postDelivery(delivery).then(() => {
-			setIsFetching(false);
-			toast("Delivery Criado Com Sucesso");
 		});
-	}, [postDelivery, selectedMotoboy, initialDelivery, deliveryState]);
+	}, [deliveryListMutator, deliveryState, initialDelivery, selectedMotoboy]);
 
 	const handleSelectChange = useCallback((e: SourceType) => {
 		dispatch({
@@ -118,7 +118,7 @@ export function DeliveryForm({ initialDelivery }: DeliveryFormComponentTypes) {
 			<SelectMotoboyInput />
 			<div>
 				<Button
-					disabled={isFetching}
+					disabled={deliveryListMutator.isPending}
 					className="hover:cursor-pointer"
 					onClick={handlePostDelivery}
 				>

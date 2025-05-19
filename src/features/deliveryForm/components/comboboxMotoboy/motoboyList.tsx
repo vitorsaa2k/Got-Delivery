@@ -1,5 +1,6 @@
 import { CommandGroup, CommandItem } from "@/components/ui/command";
 import { cn } from "@/lib/utils";
+import { fetchAllMotoboys } from "@/services/motoboy";
 import { useMotoboyStore } from "@/stores/motoboyStore";
 import { useQuery } from "@tanstack/react-query";
 import { Check } from "lucide-react";
@@ -18,13 +19,18 @@ export function MotoboyList({
 	setOpen,
 	setValue,
 }: MotoboyListTypes) {
-	const fetchAllMotoboys = useMotoboyStore(state => state.fetchAllMotoboys);
+	const updateMotoboyList = useMotoboyStore(state => state.updateMotoboyList);
 	const { data: motoboyList } = useQuery({
 		queryKey: ["motoboyList"],
-		queryFn: fetchAllMotoboys,
+		queryFn: async () => {
+			const motoboyList = await fetchAllMotoboys();
+			updateMotoboyList(motoboyList);
+			return motoboyList;
+		},
 		refetchOnMount: false,
 		refetchOnWindowFocus: false,
 	});
+
 	if (!motoboyList) return <></>;
 	return (
 		<CommandGroup>
