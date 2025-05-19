@@ -1,14 +1,31 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { postMotoboy } from "@/services/motoboy";
 import { useMotoboyStore } from "@/stores/motoboyStore";
+import { Motoboy } from "@/types/global/types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export function AddMotoboyForm() {
 	const [name, setName] = useState<string>("");
 	const [pix, setPix] = useState<string>("");
 	const addMotoboy = useMotoboyStore(state => state.addMotoboy);
-	async function handleAddMotoboy() {
-		await addMotoboy({ name, pix });
+	const queryClient = useQueryClient();
+	const createMotoboy = useMutation({
+		mutationFn: async ({ name, pix }: { name: string; pix: string }) => {
+			return await postMotoboy({ name, pix });
+		},
+		onSuccess: (data: Motoboy) => {
+			addMotoboy(data);
+			queryClient.invalidateQueries({ queryKey: ["motoboyList"] });
+		},
+		onError: () => {
+			toast("Ocorreu um erro em: Adicionar Motoboy");
+		},
+	});
+	function handleAddMotoboy() {
+		createMotoboy.mutate({ name, pix });
 	}
 
 	return (
