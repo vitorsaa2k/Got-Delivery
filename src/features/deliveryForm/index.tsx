@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { initReducer, reducer } from "@/reducers/deliveryFormReducer";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postDelivery } from "@/services/delivery";
+import { useParams } from "next/navigation";
 
 interface DeliveryFormComponentTypes {
 	initialDelivery?: Delivery;
@@ -20,6 +21,8 @@ interface DeliveryFormComponentTypes {
 
 export function DeliveryForm({ initialDelivery }: DeliveryFormComponentTypes) {
 	const addDelivery = useDeliveriesStore(state => state.addDelivery);
+	const params = useParams();
+
 	const [deliveryState, dispatch] = useReducer(
 		reducer,
 		initialDelivery,
@@ -42,6 +45,9 @@ export function DeliveryForm({ initialDelivery }: DeliveryFormComponentTypes) {
 	const selectMotoboy = useMotoboyStore(state => state.selectMotoboy);
 	const selectedMotoboy = useMotoboyStore(state => state.selectedMotoboy);
 	const handlePostDelivery = useCallback(async () => {
+		const date = params.date
+			? new Date(`${decodeURIComponent(`${params.date}`)}`)
+			: new Date();
 		if (!selectedMotoboy) return toast("Selecione o motoboy");
 		if (initialDelivery) {
 			const delivery: Delivery = {
@@ -49,17 +55,23 @@ export function DeliveryForm({ initialDelivery }: DeliveryFormComponentTypes) {
 				id: initialDelivery.id,
 				motoboy: selectedMotoboy,
 				motoboyId: selectedMotoboy.id,
-				date: new Date(),
+				date: date,
 			};
 			return deliveryListMutator.mutate(delivery);
 		}
 		return deliveryListMutator.mutate({
 			...deliveryState,
-			date: new Date(),
+			date: date,
 			motoboy: selectedMotoboy,
 			motoboyId: selectedMotoboy.id,
 		});
-	}, [deliveryListMutator, deliveryState, initialDelivery, selectedMotoboy]);
+	}, [
+		deliveryListMutator,
+		deliveryState,
+		initialDelivery,
+		selectedMotoboy,
+		params.date,
+	]);
 
 	const handleSelectChange = useCallback((e: SourceType) => {
 		dispatch({
