@@ -38,6 +38,7 @@ export function DeliveryForm({ initialDelivery }: DeliveryFormComponentTypes) {
 				return toast("Delivery Atualizado Com Sucesso");
 			}
 			queryClient.invalidateQueries({ queryKey: ["deliveryList"] });
+			dispatch({ type: "reset_inputs" });
 			addDelivery(data);
 			toast("Delivery Criado Com Sucesso");
 		},
