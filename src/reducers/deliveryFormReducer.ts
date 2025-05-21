@@ -10,7 +10,8 @@ export type Action =
 	| { type: "update_delivery_value"; payload: number }
 	| { type: "update_neighborhood"; payload: string }
 	| { type: "update_source"; payload: SourceType }
-	| { type: "update_delivery"; payload: Delivery };
+	| { type: "update_delivery"; payload: Delivery }
+	| { type: "reset_inputs" };
 
 function initReducer(delivery?: Delivery) {
 	return (
@@ -42,6 +43,12 @@ function reducer(state: ReducerState, action: Action): ReducerState {
 			return {
 				...state,
 				source: action.payload,
+			};
+		case "reset_inputs":
+			return {
+				...state,
+				neighborhood: "",
+				finalValue: 0,
 			};
 		default: {
 			throw Error("Unknown type" + action);
