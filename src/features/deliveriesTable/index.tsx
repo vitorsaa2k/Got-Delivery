@@ -22,7 +22,7 @@ export function DeliveryTable() {
 	});
 	if (!deliveryList) return <></>;
 	return (
-		<div className="grid gap-2 grid-cols-4 m-2">
+		<div className="flex gap-2 flex-wrap max-sm:justify-center">
 			{deliveryList.map(delivery => (
 				<ItemDelivery key={delivery.id} delivery={delivery} />
 			))}

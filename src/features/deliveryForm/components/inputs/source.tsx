@@ -20,7 +20,7 @@ export function DeliverySourceInput({
 		<>
 			<label>Plataforma</label>
 			<Select value={value} onValueChange={handleSelectChange}>
-				<SelectTrigger className="w-[180px]">
+				<SelectTrigger className="w-full">
 					<SelectValue placeholder="Plataforma" />
 				</SelectTrigger>
 				<SelectContent>
