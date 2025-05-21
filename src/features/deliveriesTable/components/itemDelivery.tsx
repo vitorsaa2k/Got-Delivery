@@ -40,7 +40,7 @@ export function ItemDelivery({ delivery }: { delivery: Delivery }) {
 				<p>Plataforma: {delivery.source}</p>
 				<p>Motoboy: {delivery.motoboy.name}</p>
 			</div>
-			<div className="flex justify-end items-center mt-1 gap-2">
+			<div className="flex justify-center items-center mt-1 gap-2">
 				<button
 					className="hover:bg-gray-300 hover:cursor-pointer p-2 rounded"
 					onClick={editDelivery}

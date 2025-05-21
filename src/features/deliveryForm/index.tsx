@@ -114,21 +114,23 @@ export function DeliveryForm({ initialDelivery }: DeliveryFormComponentTypes) {
 		[]
 	);
 	return (
-		<div className="m-2">
-			<DeliveryValueInput
-				deliveryValue={deliveryState.finalValue.toString()}
-				handleDeliveryValueChange={handleDeliveryValueChange}
-			/>
-			<NeighborhoodInput
-				neighborhood={deliveryState.neighborhood}
-				handleNeighborhoodChange={handleNeighborhoodChange}
-			/>
+		<div className="flex flex-col gap-1 py-2">
+			<div>
+				<DeliveryValueInput
+					deliveryValue={deliveryState.finalValue.toString()}
+					handleDeliveryValueChange={handleDeliveryValueChange}
+				/>
+				<NeighborhoodInput
+					neighborhood={deliveryState.neighborhood}
+					handleNeighborhoodChange={handleNeighborhoodChange}
+				/>
 
-			<DeliverySourceInput
-				value={deliveryState.source}
-				handleSelectChange={handleSelectChange}
-			/>
-			<SelectMotoboyInput />
+				<DeliverySourceInput
+					value={deliveryState.source}
+					handleSelectChange={handleSelectChange}
+				/>
+				<SelectMotoboyInput />
+			</div>
 			<div>
 				<Button
 					disabled={deliveryListMutator.isPending}
