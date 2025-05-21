@@ -34,15 +34,15 @@ export default function EditDeliveryPage() {
 	}, [queryDelivery, deleteDeliveryMutator]);
 
 	return (
-		<>
+		<div className="p-9">
 			<DeliveryForm initialDelivery={queryDelivery} />
 			<Button
 				disabled={deleteDeliveryMutator.isPending}
 				className="hover:cursor-pointer"
 				onClick={handleDeleteDelivery}
 			>
-				Delete
+				Deletar
 			</Button>
-		</>
+		</div>
 	);
 }
