@@ -1,0 +1,43 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
+export function FollowCursor() {
+	const ref = useRef<HTMLDivElement>(null);
+	useEffect(() => {
+		const handleMouseMovement = (e: MouseEvent) => {
+			if (!ref.current) return;
+			ref.current.animate(
+				{
+					transform: `translate(${e.x}px, ${e.y}px)`,
+				},
+				{ duration: 1000, fill: "forwards" }
+			);
+			const tick = () => {
+				if (!ref.current) return;
+
+				window.requestAnimationFrame(tick);
+			};
+			tick();
+		};
+		window.addEventListener("mousemove", handleMouseMovement);
+
+		return () => {
+			window.removeEventListener("mousemove", handleMouseMovement);
+		};
+	}, []);
+
+	const gradientStyle: React.CSSProperties = {
+		background: `radial-gradient(circle farthest-side,rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 1%, rgba(0, 0, 0, 0) 100%)`,
+		width: "150px",
+		height: "150px",
+		position: "fixed",
+		top: "-75px",
+		left: "-75px",
+		borderRadius: "50%",
+		zIndex: -1,
+		transition: "background-position 0.1s ease",
+	};
+
+	return <div ref={ref} style={gradientStyle}></div>;
+}
