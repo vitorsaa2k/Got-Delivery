@@ -36,7 +36,7 @@ export function FollowCursor() {
 		left: "-75px",
 		borderRadius: "50%",
 		zIndex: -1,
-		transition: "background-position 0.1s ease",
+		display: window.innerWidth <= 1024 ? "none" : "block",
 	};
 
 	return <div ref={ref} style={gradientStyle}></div>;
