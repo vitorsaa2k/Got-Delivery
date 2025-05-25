@@ -13,12 +13,6 @@ export function FollowCursor() {
 				},
 				{ duration: 1000, fill: "forwards" }
 			);
-			const tick = () => {
-				if (!ref.current) return;
-
-				window.requestAnimationFrame(tick);
-			};
-			tick();
 		};
 		window.addEventListener("mousemove", handleMouseMovement);
 
@@ -29,6 +23,9 @@ export function FollowCursor() {
 
 	const gradientStyle: React.CSSProperties = {
 		background: `radial-gradient(circle farthest-side,rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 1%, rgba(0, 0, 0, 0) 100%)`,
+		transform: `translate(${ref.current?.getBoundingClientRect().x}px, ${
+			ref.current?.getBoundingClientRect().y
+		}px)`,
 		width: "150px",
 		height: "150px",
 		position: "fixed",
