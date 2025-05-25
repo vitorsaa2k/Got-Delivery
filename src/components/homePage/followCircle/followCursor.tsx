@@ -1,13 +1,22 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function FollowCursor() {
+	const [center, setCenter] = useState({ x: 0, y: 0 });
+	const [isMobile, setIsMobile] = useState(true);
 	const ref = useRef<HTMLDivElement>(null);
-	const centerHorizontal = window.innerWidth / 2;
-	const centerVertical = window.innerHeight / 2;
 	useEffect(() => {
 		if (!ref.current) return;
+		const handleResize = () => {
+			setCenter({
+				x: window.innerWidth / 2,
+				y: window.innerHeight / 2,
+			});
+			setIsMobile(window.innerWidth <= 1024);
+		};
+
+		handleResize();
 		const handleMouseMovement = (e: MouseEvent) => {
 			if (!ref.current) return;
 			ref.current.animate(
@@ -26,9 +35,7 @@ export function FollowCursor() {
 
 	const gradientStyle: React.CSSProperties = {
 		background: `radial-gradient(circle farthest-side,rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 1%, rgba(0, 0, 0, 0) 100%)`,
-		transform: `translate(${
-			ref.current?.getBoundingClientRect().x ?? centerHorizontal
-		}px, ${ref.current?.getBoundingClientRect().y ?? centerVertical}px)`,
+		transform: `translate(${center.x}px, ${center.y}px)`,
 		width: "150px",
 		height: "150px",
 		position: "fixed",
@@ -36,7 +43,7 @@ export function FollowCursor() {
 		left: "-75px",
 		borderRadius: "50%",
 		zIndex: -1,
-		display: window.innerWidth <= 1024 ? "none" : "block",
+		display: isMobile ? "none" : "block",
 	};
 
 	return <div ref={ref} style={gradientStyle}></div>;
