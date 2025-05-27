@@ -1,3 +1,4 @@
+"use client";
 import { CaretLeft } from "@phosphor-icons/react";
 import { ArrowWrapper } from "./arrowWrapper";
 import { useParams, useRouter } from "next/navigation";

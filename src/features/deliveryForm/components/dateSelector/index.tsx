@@ -1,3 +1,4 @@
+"use client";
 import { DateButton } from "./dateButton";
 import { LeftArrow } from "./arrows/leftArrow";
 import { RightArrow } from "./arrows/rightArrow";

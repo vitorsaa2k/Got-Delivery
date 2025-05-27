@@ -14,6 +14,7 @@ import { initReducer, reducer } from "@/reducers/deliveryFormReducer";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postDelivery } from "@/services/delivery";
 import { useParams } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 
 interface DeliveryFormComponentTypes {
 	initialDelivery?: Delivery;
@@ -22,7 +23,8 @@ interface DeliveryFormComponentTypes {
 export function DeliveryForm({ initialDelivery }: DeliveryFormComponentTypes) {
 	const addDelivery = useDeliveriesStore(state => state.addDelivery);
 	const params = useParams();
-
+	const session = useSession();
+	console.log(session);
 	const [deliveryState, dispatch] = useReducer(
 		reducer,
 		initialDelivery,
@@ -57,6 +59,7 @@ export function DeliveryForm({ initialDelivery }: DeliveryFormComponentTypes) {
 				motoboy: selectedMotoboy,
 				motoboyId: selectedMotoboy.id,
 				date: date,
+				companyId: session.data!.user.id,
 			};
 			return deliveryListMutator.mutate(delivery);
 		}
@@ -65,6 +68,7 @@ export function DeliveryForm({ initialDelivery }: DeliveryFormComponentTypes) {
 			date: date,
 			motoboy: selectedMotoboy,
 			motoboyId: selectedMotoboy.id,
+			companyId: session.data!.user.id,
 		});
 	}, [
 		deliveryListMutator,
@@ -72,6 +76,7 @@ export function DeliveryForm({ initialDelivery }: DeliveryFormComponentTypes) {
 		initialDelivery,
 		selectedMotoboy,
 		params.date,
+		session.data,
 	]);
 
 	const handleSelectChange = useCallback((e: SourceType) => {
@@ -138,6 +143,9 @@ export function DeliveryForm({ initialDelivery }: DeliveryFormComponentTypes) {
 					onClick={handlePostDelivery}
 				>
 					Confirmar
+				</Button>
+				<Button onClick={() => signOut({ redirect: true, callbackUrl: "/" })}>
+					Logout
 				</Button>
 			</div>
 		</div>

@@ -1,10 +1,15 @@
-"use client";
 import { DeliveryTable } from "@/features/deliveriesTable";
 import { DayDeliveriesResume } from "@/features/dayDeliveriesResume";
 import { DeliveryForm } from "@/features/deliveryForm";
 import { DateSelector } from "@/features/deliveryForm/components/dateSelector";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
-export default function Home() {
+export default async function Home() {
+	const session = await getServerSession();
+	if (!session) {
+		redirect("/login");
+	}
 	return (
 		<main className="flex justify-between p-9 max-lg:flex-col max-sm:items-center gap-16">
 			<div className="w-full">

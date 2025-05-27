@@ -2,6 +2,7 @@ export interface Motoboy {
 	name: string;
 	pix: string;
 	id: string;
+	companyId: string;
 }
 
 export interface Delivery {
@@ -12,6 +13,11 @@ export interface Delivery {
 	motoboy: Motoboy;
 	motoboyId: string;
 	date: Date;
+	companyId: string;
+}
+
+export interface ApiResponse {
+	error?: string;
 }
 
 export type SourceType = "Ifood" | "PedeAi" | "WhatsApp";
