@@ -26,6 +26,7 @@ export async function POST(request: NextRequest) {
 			neighborhood: body.neighborhood,
 			source: body.source,
 			motoboyId: body.motoboyId,
+			companyId: body.companyId,
 		},
 		update: {
 			finalValue: body.finalValue,

@@ -3,6 +3,7 @@ import { Motoboy, SourceType } from "./types";
 export interface CreateMotoboy {
 	name: string;
 	pix: string;
+	companyId: string;
 }
 
 export interface CreateDelivery {
@@ -12,4 +13,5 @@ export interface CreateDelivery {
 	motoboy: Motoboy;
 	motoboyId: string;
 	date: Date;
+	companyId: string;
 }

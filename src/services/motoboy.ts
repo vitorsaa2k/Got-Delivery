@@ -1,7 +1,15 @@
 import { Motoboy } from "@/types/global/types";
 
-async function postMotoboy({ name, pix }: { name: string; pix: string }) {
-	const body = JSON.stringify({ name, pix });
+async function postMotoboy({
+	name,
+	pix,
+	companyId,
+}: {
+	name: string;
+	pix: string;
+	companyId: string;
+}) {
+	const body = JSON.stringify({ name, pix, companyId });
 	return await fetch("/api/motoboy", { body, method: "POST" })
 		.then(res => res.json())
 		.then((data: Motoboy) => data);
