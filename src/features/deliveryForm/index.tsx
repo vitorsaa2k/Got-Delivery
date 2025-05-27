@@ -24,7 +24,6 @@ export function DeliveryForm({ initialDelivery }: DeliveryFormComponentTypes) {
 	const addDelivery = useDeliveriesStore(state => state.addDelivery);
 	const params = useParams();
 	const session = useSession();
-	console.log(session);
 	const [deliveryState, dispatch] = useReducer(
 		reducer,
 		initialDelivery,
