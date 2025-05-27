@@ -24,7 +24,7 @@ export default function LoginForm() {
 					signIn("credentials", {
 						email,
 						password,
-						redirect: true,
+						redirect: false,
 						callbackUrl: `/delivery/date/${removeTimeFromDate(
 							new Date().toISOString()
 						)}T00:00:00.000Z`,
