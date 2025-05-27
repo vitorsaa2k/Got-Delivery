@@ -5,10 +5,15 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { removeTimeFromDate } from "@/utils/removeTimeDate";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const redirectUrl = `/delivery/date/${removeTimeFromDate(
+		new Date().toISOString()
+	)}T00:00:00.000Z`;
+	const router = useRouter();
 	return (
 		<div className="p-4 rounded-2xl flex flex-col gap-2 border items-center">
 			<label>
@@ -25,9 +30,12 @@ export default function LoginForm() {
 						email,
 						password,
 						redirect: false,
-						callbackUrl: `/delivery/date/${removeTimeFromDate(
-							new Date().toISOString()
-						)}T00:00:00.000Z`,
+						callbackUrl: redirectUrl,
+					}).then(res => {
+						if (res) {
+							if (!res.error && res.status === 200)
+								return router.push(res.url ?? redirectUrl);
+						}
 					});
 				}}
 			>
