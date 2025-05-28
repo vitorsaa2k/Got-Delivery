@@ -3,9 +3,11 @@ import { useDeliveriesStore } from "@/stores/deliveriesStore";
 import { ItemDelivery } from "./components/itemDelivery";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { fetchAllDeliveriesByDate } from "@/services/delivery";
+import { fetchAllDeliveriesByDateAndId } from "@/services/delivery";
+import { useSession } from "next-auth/react";
 
 export function DeliveryTable() {
+	const session = useSession();
 	const updateDeliveryList = useDeliveriesStore(
 		state => state.updateDeliveryList
 	);
@@ -13,8 +15,9 @@ export function DeliveryTable() {
 	const { data: deliveryList } = useQuery({
 		queryKey: ["deliveryList"],
 		queryFn: async () => {
-			const deliveryList = await fetchAllDeliveriesByDate(
-				`${decodeURIComponent(`${params.date}`)}`
+			const deliveryList = await fetchAllDeliveriesByDateAndId(
+				`${decodeURIComponent(`${params.date}`)}`,
+				session.data!.user.id
 			);
 			updateDeliveryList(deliveryList);
 			return deliveryList;

@@ -14,6 +14,12 @@ async function fetchAllDeliveriesByDate(date: string) {
 		.then((data: Delivery[]) => data);
 }
 
+async function fetchAllDeliveriesByDateAndId(date: string, companyId: string) {
+	return await fetch(`/api/delivery/date/${date}?id=${companyId}`)
+		.then(res => res.json())
+		.then((data: Delivery[]) => data);
+}
+
 async function postDelivery(delivery: CreateDelivery) {
 	const body = JSON.stringify(delivery);
 	return await fetch("/api/delivery", {
@@ -36,4 +42,5 @@ export {
 	fetchAllDeliveriesByDate,
 	postDelivery,
 	deleteDelivery,
+	fetchAllDeliveriesByDateAndId,
 };

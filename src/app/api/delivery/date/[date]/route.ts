@@ -17,7 +17,15 @@ export async function GET(
 	{ params }: { params: Promise<{ date: string }> }
 ) {
 	const { date } = await params;
-	const { start, end, error } = getDateRange(await date);
+	const { start, end, error } = getDateRange(date);
+
+	const { searchParams } = new URL(req.url);
+	const id = searchParams.get("id");
+	console.log(date, id);
+	if (!id)
+		return NextResponse.json({
+			error: "companyId was not provided",
+		});
 	if (error) return NextResponse.json({ error }, { status: 400 });
 	const deliveries = await prisma.delivery.findMany({
 		where: {
@@ -25,6 +33,7 @@ export async function GET(
 				gte: start,
 				lt: end,
 			},
+			companyId: id,
 		},
 		include: {
 			motoboy: true,

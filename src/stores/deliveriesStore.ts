@@ -4,7 +4,7 @@ import { create } from "zustand";
 interface DeliveryState {
 	deliveryList: Delivery[];
 	addDelivery: (delivery: Delivery) => void;
-	removeDelivery: (delivery: Delivery) => Promise<void>;
+	removeDelivery: (delivery: Delivery) => void;
 	updateDelivery: (delivery: Delivery, updatedDelivery: Delivery) => void;
 	updateDeliveryList: (deliveryList: Delivery[]) => Promise<Delivery[]>;
 }
@@ -14,7 +14,7 @@ export const useDeliveriesStore = create<DeliveryState>()(set => ({
 	addDelivery: async (delivery: Delivery) => {
 		set(state => ({ deliveryList: [...state.deliveryList, delivery] }));
 	},
-	removeDelivery: async (delivery: Delivery) => {
+	removeDelivery: (delivery: Delivery) => {
 		set(state => {
 			const index = state.deliveryList.findIndex(i => i.id === delivery.id);
 			state.deliveryList.splice(index, 1);
