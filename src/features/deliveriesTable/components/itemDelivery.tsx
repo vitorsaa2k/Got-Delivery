@@ -1,6 +1,5 @@
 "use client";
 import { deleteDelivery } from "@/services/delivery";
-import { useDeliveriesStore } from "@/stores/deliveriesStore";
 import { Delivery } from "@/types/global/types";
 import { Pencil, Trash } from "@phosphor-icons/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -16,17 +15,14 @@ export function ItemDelivery({ delivery }: { delivery: Delivery }) {
 			return await deleteDelivery(delivery);
 		},
 		onSuccess: async () => {
-			removeDelivery(delivery);
 			await queryClient.invalidateQueries({ queryKey: ["deliveryList"] });
 			toast("Delivery removido com sucesso");
 		},
 	});
-	const removeDelivery = useDeliveriesStore(state => state.removeDelivery);
 	const handleRemoveDelivery = useCallback(async () => {
 		deleteDeliveryMutator.mutate();
 	}, [deleteDeliveryMutator]);
 	const editDelivery = useCallback(() => {
-		//TODO remove all deliveries when clicking edit button
 		router.push(`/delivery/${delivery.id}`);
 	}, [router, delivery.id]);
 	return (
