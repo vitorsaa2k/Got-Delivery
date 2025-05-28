@@ -14,7 +14,6 @@ export function DeliveryTable() {
 	const params = useParams();
 	const { data: deliveryList } = useQuery({
 		queryKey: ["deliveryList"],
-		retry: false,
 		queryFn: async () => {
 			const deliveryList = await fetchAllDeliveriesByDateAndId(
 				`${decodeURIComponent(`${params.date}`)}`,
