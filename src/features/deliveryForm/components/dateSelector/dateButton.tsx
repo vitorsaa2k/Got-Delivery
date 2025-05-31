@@ -1,4 +1,3 @@
-import { removeTimeFromDate } from "@/utils/removeTimeDate";
 import { useParams, useRouter } from "next/navigation";
 import { Calendar as CalendarIcon } from "lucide-react";
 
@@ -11,6 +10,7 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { useCallback, useState } from "react";
+import { removeTimeFromDate } from "@/utils/formatDate";
 
 export function DateButton() {
 	const router = useRouter();

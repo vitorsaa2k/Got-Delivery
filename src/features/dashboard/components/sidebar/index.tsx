@@ -1,5 +1,5 @@
 "use client";
-import { removeTimeFromDate } from "@/utils/removeTimeDate";
+import { removeTimeFromDate } from "@/utils/formatDate";
 import { SignOut } from "@phosphor-icons/react/dist/ssr";
 import { signOut } from "next-auth/react";
 import Link from "next/link";

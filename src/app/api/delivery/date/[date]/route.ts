@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { removeTimeFromDate } from "@/utils/removeTimeDate";
+import { removeTimeFromDate } from "@/utils/formatDate";
 import { NextRequest, NextResponse } from "next/server";
 
 function getDateRange(day: string) {
@@ -21,7 +21,6 @@ export async function GET(
 
 	const { searchParams } = new URL(req.url);
 	const id = searchParams.get("id");
-	console.log(date, id);
 	if (!id)
 		return NextResponse.json({
 			error: "companyId was not provided",

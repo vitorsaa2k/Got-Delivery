@@ -1,4 +1,4 @@
-import { removeTimeFromDate } from "./removeTimeDate";
+import { removeTimeFromDate } from "./formatDate";
 
 function dateAddOneDay(date: string): string {
 	const currentDate = new Date(

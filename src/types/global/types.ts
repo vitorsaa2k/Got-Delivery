@@ -20,4 +20,9 @@ export interface ApiResponse {
 	error?: string;
 }
 
+export interface DashboardResume {
+	deliveriesLastWeek: Delivery[];
+	deliveriesLastMonth: Delivery[];
+}
+
 export type SourceType = "Ifood" | "PedeAi" | "WhatsApp";

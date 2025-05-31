@@ -1,5 +1,5 @@
 import { HomePage } from "@/features/homePage";
-import { removeTimeFromDate } from "@/utils/removeTimeDate";
+import { removeTimeFromDate } from "@/utils/formatDate";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
