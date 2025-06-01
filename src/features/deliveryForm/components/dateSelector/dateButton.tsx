@@ -11,17 +11,17 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { useCallback, useState } from "react";
+import { createDateInCorrectTimezone } from "@/utils/manageDate";
 
 export function DateButton() {
 	const router = useRouter();
 	const params = useParams();
-	const noTimeDate = removeTimeFromDate(
-		new Date(decodeURIComponent(`${params.date}`)).toISOString()
+	const currentDate = createDateInCorrectTimezone(
+		decodeURIComponent(`${params.date}`)
 	);
 	const [date, setDate] = useState<Date | undefined>(
-		noTimeDate ? new Date(noTimeDate) : undefined
+		currentDate ? currentDate : undefined
 	);
-
 	const handlePickDate = useCallback(
 		(selectedDate: Date | undefined) => {
 			setDate(selectedDate);
@@ -54,7 +54,7 @@ export function DateButton() {
 					mode="single"
 					selected={date}
 					onSelect={handlePickDate}
-					initialFocus
+					autoFocus
 				/>
 			</PopoverContent>
 		</Popover>
