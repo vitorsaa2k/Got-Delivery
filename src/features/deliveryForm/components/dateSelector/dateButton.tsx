@@ -54,7 +54,7 @@ export function DateButton() {
 					mode="single"
 					selected={date}
 					onSelect={handlePickDate}
-					initialFocus
+					autoFocus
 				/>
 			</PopoverContent>
 		</Popover>
