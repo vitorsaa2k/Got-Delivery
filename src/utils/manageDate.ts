@@ -18,4 +18,9 @@ function dateRemoveOneDay(date: string): string {
 	return new Date(nextDay).toISOString();
 }
 
-export { dateRemoveOneDay, dateAddOneDay };
+function createDateInCorrectTimezone(date: string) {
+	const correctTimeZoneDate = `${removeTimeFromDate(date)}T00:00:00-03:00`;
+	return new Date(correctTimeZoneDate);
+}
+
+export { dateRemoveOneDay, dateAddOneDay, createDateInCorrectTimezone };
