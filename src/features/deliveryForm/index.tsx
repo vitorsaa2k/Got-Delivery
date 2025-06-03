@@ -14,7 +14,7 @@ import { initReducer, reducer } from "@/reducers/deliveryFormReducer";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postDelivery } from "@/services/delivery";
 import { useParams } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 interface DeliveryFormComponentTypes {
 	initialDelivery?: Delivery;
@@ -142,9 +142,6 @@ export function DeliveryForm({ initialDelivery }: DeliveryFormComponentTypes) {
 					onClick={handlePostDelivery}
 				>
 					Confirmar
-				</Button>
-				<Button onClick={() => signOut({ redirect: true, callbackUrl: "/" })}>
-					Logout
 				</Button>
 			</div>
 		</div>

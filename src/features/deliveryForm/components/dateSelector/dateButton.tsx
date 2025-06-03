@@ -1,4 +1,3 @@
-import { removeTimeFromDate } from "@/utils/removeTimeDate";
 import { useParams, useRouter } from "next/navigation";
 import { Calendar as CalendarIcon } from "lucide-react";
 
