@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/popover";
 import { useCallback, useState } from "react";
 import { createDateInCorrectTimezone } from "@/utils/manageDate";
+import { removeTimeFromDate } from "@/utils/formatDate";
 
 export function DateButton() {
 	const router = useRouter();
