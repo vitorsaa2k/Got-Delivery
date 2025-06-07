@@ -1,22 +1,13 @@
 "use client";
 import { Delivery } from "@/types/global/types";
-import { useQuery } from "@tanstack/react-query";
 import {
-	LineChart,
-	Line,
 	XAxis,
 	YAxis,
-	CartesianGrid,
 	Tooltip,
-	Legend,
-	Area,
 	ResponsiveContainer,
-	AreaChart,
 	BarChart,
 	Bar,
 	Rectangle,
-	Pie,
-	PieChart,
 } from "recharts";
 
 const data = [
