@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { LoginButton } from "./loginButton";
 import { RegisterButton } from "./registerButton";
 import { redirect } from "next/navigation";
-import { removeTimeFromDate } from "@/utils/removeTimeDate";
+import { removeTimeFromDate } from "@/utils/formatDate";
 
 export async function LoginButtons() {
 	const session = await getServerSession();

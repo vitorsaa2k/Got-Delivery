@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { removeTimeFromDate } from "@/utils/removeTimeDate";
+import { removeTimeFromDate } from "@/utils/formatDate";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 

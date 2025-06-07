@@ -1,4 +1,3 @@
-import { removeTimeFromDate } from "@/utils/removeTimeDate";
 import { useParams, useRouter } from "next/navigation";
 import { Calendar as CalendarIcon } from "lucide-react";
 
@@ -12,6 +11,7 @@ import {
 } from "@/components/ui/popover";
 import { useCallback, useState } from "react";
 import { createDateInCorrectTimezone } from "@/utils/manageDate";
+import { removeTimeFromDate } from "@/utils/formatDate";
 
 export function DateButton() {
 	const router = useRouter();

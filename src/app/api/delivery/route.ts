@@ -3,13 +3,19 @@ import { Delivery } from "@/types/global/types";
 import { NextRequest, NextResponse } from "next/server";
 import { randomBytes } from "crypto";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+	const { searchParams } = new URL(req.url);
+	const id = searchParams.get("id");
+	if (!id)
+		return NextResponse.json({
+			error: "companyId was not provided",
+		});
 	const deliveries = await prisma.delivery.findMany({
+		where: { companyId: id },
 		include: {
 			motoboy: true,
 		},
 	});
-	console.log(deliveries);
 	return NextResponse.json(deliveries);
 }
 
