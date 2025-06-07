@@ -16,8 +16,7 @@ export async function GET(req: NextRequest) {
 		return NextResponse.json({
 			error: "companyId was not provided",
 		});
-	console.log(start, end);
-	const deliveriesDateResume = await prisma.delivery.groupBy({
+	/* const deliveriesDateResume = await prisma.delivery.groupBy({
 		by: ["date"],
 		where: {
 			companyId: id,
@@ -48,7 +47,7 @@ export async function GET(req: NextRequest) {
 		orderBy: {
 			source: "asc",
 		},
-	});
+	}); */
 	const deliveriesLastWeekPromise = prisma.delivery.findMany({
 		where: {
 			companyId: id,
