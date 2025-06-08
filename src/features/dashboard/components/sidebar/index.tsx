@@ -1,31 +1,37 @@
 "use client";
 import { removeTimeFromDate } from "@/utils/formatDate";
-import { SignOut } from "@phosphor-icons/react/dist/ssr";
-import { signOut } from "next-auth/react";
-import Link from "next/link";
+import { HouseIcon, MotorcycleIcon, PackageIcon } from "@phosphor-icons/react";
+import { useEffect, useState } from "react";
+import { SidebarItem } from "./sideBarItem";
+import { SidebarHeader } from "./header";
 
 export function Sidebar() {
+	const [currentUrl, setCurrentUrl] = useState("");
+	useEffect(() => {
+		setCurrentUrl(window.location.href);
+	}, []);
 	return (
-		<aside className="flex-col p-2 justify-between gap-2 bg-primary text-primary-foreground h-screen hidden md:flex md:min-w-3xs">
-			<nav className="flex flex-col items-center gap-2">
-				<Link href={"/dashboard"}>Home</Link>
-				<Link
+		<aside className="flex-col p-2 gap-2 bg-primary text-primary-foreground h-screen hidden md:flex md:min-w-3xs">
+			<SidebarHeader />
+			<nav className="flex flex-col items-center gap-2 ">
+				<SidebarItem href="/dashboard" currentUrl={currentUrl}>
+					<HouseIcon size={20} />
+					Home
+				</SidebarItem>
+				<SidebarItem
 					href={`/delivery/date/${removeTimeFromDate(
 						new Date().toISOString()
 					)}T00:00:00.000Z`}
+					currentUrl={currentUrl}
 				>
+					<PackageIcon size={20} />
 					Deliveries
-				</Link>
-				<Link href={"/motoboy"}>Motoboys</Link>
+				</SidebarItem>
+				<SidebarItem currentUrl={currentUrl} href={"/motoboy"}>
+					<MotorcycleIcon size={20} />
+					Motoboys
+				</SidebarItem>
 			</nav>
-			<div className="flex justify-end">
-				<button
-					onClick={() => signOut()}
-					className="bg-red-400 rounded p-2 hover:cursor-pointer flex items-center"
-				>
-					<SignOut className="" size={24} />
-				</button>
-			</div>
 		</aside>
 	);
 }
