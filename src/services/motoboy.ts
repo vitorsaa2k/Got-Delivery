@@ -15,8 +15,8 @@ async function postMotoboy({
 		.then((data: Motoboy) => data);
 }
 
-async function fetchAllMotoboys() {
-	return await fetch("/api/motoboy")
+async function fetchAllMotoboys(id: string) {
+	return await fetch(`/api/motoboy?id=${id}`)
 		.then(res => res.json())
 		.then((data: Motoboy[]) => data);
 }

@@ -4,6 +4,7 @@ import { fetchAllMotoboys } from "@/services/motoboy";
 import { useMotoboyStore } from "@/stores/motoboyStore";
 import { useQuery } from "@tanstack/react-query";
 import { Check } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { Dispatch, SetStateAction } from "react";
 
 interface MotoboyListTypes {
@@ -20,10 +21,11 @@ export function MotoboyList({
 	setValue,
 }: MotoboyListTypes) {
 	const updateMotoboyList = useMotoboyStore(state => state.updateMotoboyList);
+	const session = useSession();
 	const { data: motoboyList } = useQuery({
 		queryKey: ["motoboyList"],
 		queryFn: async () => {
-			const motoboyList = await fetchAllMotoboys();
+			const motoboyList = await fetchAllMotoboys(session.data!.user.id);
 			updateMotoboyList(motoboyList);
 			return motoboyList;
 		},
