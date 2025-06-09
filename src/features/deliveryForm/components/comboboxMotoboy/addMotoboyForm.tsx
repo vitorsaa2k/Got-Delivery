@@ -14,7 +14,6 @@ export function AddMotoboyForm() {
 	const addMotoboy = useMotoboyStore(state => state.addMotoboy);
 	const session = useSession();
 	const queryClient = useQueryClient();
-	console.log(session);
 	const createMotoboy = useMutation({
 		mutationFn: async ({ name, pix }: { name: string; pix: string }) => {
 			return await postMotoboy({
