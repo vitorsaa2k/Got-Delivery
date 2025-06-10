@@ -4,7 +4,7 @@ import { HomePageNav } from "./nav";
 
 export function HomePageHeader() {
 	return (
-		<header className="flex justify-center gap-16 px-32 py-4">
+		<header className="flex justify-center gap-16 py-4 sticky top-0">
 			<Logo />
 			<HomePageNav />
 			<LoginButtons />
