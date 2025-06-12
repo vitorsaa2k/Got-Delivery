@@ -2,9 +2,8 @@
 import { fetchAllMotoboys } from "@/services/motoboy";
 import { useMotoboyStore } from "@/stores/motoboyStore";
 import { useQuery } from "@tanstack/react-query";
-import { MotoboyDashboardItem } from "./motoboyItem";
-import { MostDeliveriesChart } from "./topDeliveriesChart";
 import { useSession } from "next-auth/react";
+import { MotoboyTable } from "./motoboyTable";
 
 export function Motoboy() {
 	const updateMotoboyList = useMotoboyStore(state => state.updateMotoboyList);
@@ -21,13 +20,8 @@ export function Motoboy() {
 	});
 	if (!motoboyList) return <></>;
 	return (
-		<div>
-			<MostDeliveriesChart />
-			<div>
-				{motoboyList.map(motoboy => (
-					<MotoboyDashboardItem motoboy={motoboy} key={motoboy.id} />
-				))}
-			</div>
+		<div className="p-2">
+			<MotoboyTable motoboyList={motoboyList} />
 		</div>
 	);
 }
