@@ -10,7 +10,7 @@ export function Overlay({
 	return (
 		<div
 			ref={ref}
-			className={`w-screen inset-0 bg-black/20 fixed transition-opacity duration-300 ${
+			className={`w-screen hidden inset-0 bg-black/20 fixed transition-opacity duration-300 ${
 				showSidebar ? "opacity-100" : "opacity-0"
 			}`}
 		></div>
