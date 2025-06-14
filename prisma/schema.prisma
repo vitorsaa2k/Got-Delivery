@@ -12,8 +12,8 @@ model Delivery {
   finalValue   Int
   neighborhood String
   source       String
-  motoboy      Motoboy  @relation(fields: [motoboyId], references: [id])
-  motoboyId    String   @db.ObjectId
+  motoboy      Motoboy  @relation(fields: [motoboyId], references: [id], onDelete: Cascade)
+  motoboyId    String   @default("1") @db.ObjectId
   date         DateTime
   Company      Company  @relation(fields: [companyId], references: [id])
   companyId    String   @db.ObjectId

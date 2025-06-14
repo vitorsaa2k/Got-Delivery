@@ -21,4 +21,11 @@ async function fetchAllMotoboys(id: string) {
 		.then((data: Motoboy[]) => data);
 }
 
-export { postMotoboy, fetchAllMotoboys };
+async function deleteMotoboy(motoboyId: string) {
+	const body = JSON.stringify({ id: motoboyId });
+	return await fetch(`/api/motoboy`, { body, method: "DELETE" })
+		.then(res => res.json())
+		.then((data: Motoboy) => data);
+}
+
+export { postMotoboy, fetchAllMotoboys, deleteMotoboy };

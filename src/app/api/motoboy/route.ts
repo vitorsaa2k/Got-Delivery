@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
 	const id = searchParams.get("id");
 	if (!id) {
 		return NextResponse.json(
-			{ error: "CompanyIdno not Provided" },
+			{ error: "CompanyId not Provided" },
 			{ status: 400 }
 		);
 	}
@@ -25,4 +25,17 @@ export async function POST(request: NextRequest) {
 	});
 
 	return NextResponse.json(motoboy, { status: 200 });
+}
+
+export async function DELETE(request: NextRequest) {
+	const body = await request.json();
+	console.log(body);
+	const motoboy = await prisma.motoboy.delete({
+		where: {
+			id: body.id,
+		},
+	});
+	console.log(motoboy);
+
+	return NextResponse.json({ message: "motoboy deletado" }, { status: 200 });
 }
