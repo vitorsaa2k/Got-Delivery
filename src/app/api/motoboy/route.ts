@@ -10,12 +10,12 @@ export async function GET(req: NextRequest) {
 			{ status: 400 }
 		);
 	}
-	const deliveries = await prisma.motoboy.findMany({
+	const motoboys = await prisma.motoboy.findMany({
 		where: {
 			companyId: id,
 		},
 	});
-	return NextResponse.json(deliveries);
+	return NextResponse.json(motoboys);
 }
 
 export async function POST(request: NextRequest) {
@@ -29,13 +29,11 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
 	const body = await request.json();
-	console.log(body);
-	const motoboy = await prisma.motoboy.delete({
+	await prisma.motoboy.delete({
 		where: {
 			id: body.id,
 		},
 	});
-	console.log(motoboy);
 
 	return NextResponse.json({ message: "motoboy deletado" }, { status: 200 });
 }

@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { deleteMotoboy } from "@/services/motoboy";
 import { toast } from "sonner";
+import { queryClient } from "@/app/providers";
 
 export const columns: ColumnDef<Motoboy>[] = [
 	{
@@ -75,9 +76,12 @@ export const columns: ColumnDef<Motoboy>[] = [
 										<AlertDialogCancel>Cancelar</AlertDialogCancel>
 										<AlertDialogAction
 											onClick={() => {
-												deleteMotoboy(motoboy.id).then(() =>
-													toast("Motoboy deletado com sucesso")
-												);
+												deleteMotoboy(motoboy.id).then(() => {
+													toast("Motoboy deletado com sucesso");
+													queryClient.invalidateQueries({
+														queryKey: ["motoboyList"],
+													});
+												});
 											}}
 										>
 											Continuar
