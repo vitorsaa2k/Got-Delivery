@@ -48,10 +48,11 @@ export function MobileSidebar() {
 	};
 	useEffect(() => {
 		setCurrentUrl(window.location.href);
-	}, [showSidebar]);
+		hideOverlay();
+	}, []);
 	return (
 		<div className="hidden max-md:block">
-			<Overlay ref={ref} showSidebar={showSidebar} />
+			<Overlay ref={ref} />
 			<div
 				className={`w-2/3 bg-primary-foreground fixed h-screen right-0 z-10 transform transition-transform duration-300 ${
 					showSidebar ? "translate-x-0" : "translate-x-full"
