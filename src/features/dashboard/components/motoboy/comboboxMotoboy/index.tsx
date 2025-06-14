@@ -5,14 +5,14 @@ import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
-} from "../../../../components/ui/popover";
-import { Button } from "../../../../components/ui/button";
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
 import {
 	Command,
 	CommandEmpty,
 	CommandInput,
 	CommandList,
-} from "../../../../components/ui/command";
+} from "@/components/ui/command";
 import { ChevronsUpDown } from "lucide-react";
 import { useMotoboyStore } from "@/stores/motoboyStore";
 import { AddMotoboyDialog } from "./addMotoboyDialog";

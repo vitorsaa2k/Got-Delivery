@@ -28,4 +28,23 @@ async function deleteMotoboy(motoboyId: string) {
 		.then((data: Motoboy) => data);
 }
 
-export { postMotoboy, fetchAllMotoboys, deleteMotoboy };
+async function fetchMotoboyById(id: string) {
+	return await fetch(`/api/motoboy/${id}`)
+		.then(res => res.json())
+		.then((data: Motoboy) => data);
+}
+
+async function updateMotoboy({ name, pix, id }: Motoboy) {
+	const body = JSON.stringify({ name, pix });
+	return await fetch(`/api/motoboy/${id}`, { body, method: "POST" })
+		.then(res => res.json())
+		.then((data: Motoboy) => data);
+}
+
+export {
+	postMotoboy,
+	fetchAllMotoboys,
+	deleteMotoboy,
+	fetchMotoboyById,
+	updateMotoboy,
+};

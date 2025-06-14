@@ -21,13 +21,13 @@ export const useMotoboyStore = create<MotoboyState>()(set => ({
 	},
 	removeMoboboy: (motoboy: Motoboy) =>
 		set(state => {
-			const index = state.motoboyList.findIndex(i => i.name === motoboy.name);
+			const index = state.motoboyList.findIndex(i => i.id === motoboy.id);
 			const newList = state.motoboyList.splice(index, 1);
 			return { motoboyList: newList };
 		}),
 	updateMotoboy: (motoboy: Motoboy, updatedMotoboy: Motoboy) =>
 		set(state => {
-			const index = state.motoboyList.findIndex(i => i.name === motoboy.name);
+			const index = state.motoboyList.findIndex(i => i.id === motoboy.id);
 			const newList = state.motoboyList;
 			newList[index] = updatedMotoboy;
 			return { motoboyList: newList };

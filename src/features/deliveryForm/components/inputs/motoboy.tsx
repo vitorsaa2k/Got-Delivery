@@ -1,4 +1,4 @@
-import { ComboboxMotoboy } from "../comboboxMotoboy";
+import { ComboboxMotoboy } from "../../../dashboard/components/motoboy/comboboxMotoboy";
 
 export function SelectMotoboyInput() {
 	return (
