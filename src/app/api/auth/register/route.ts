@@ -4,13 +4,16 @@ import { hash } from "bcrypt";
 
 export async function POST(req: Request) {
 	const { email, password, name } = await req.json();
-	console.log(email, password, name);
 
 	if (!email || !password) {
 		return NextResponse.json(
-			{ error: "Email and password are required" },
+			{ error: "Email e senha são obrigatórios" },
 			{ status: 400 }
 		);
+	}
+
+	if (!name) {
+		return NextResponse.json({ error: "Escolha um nome" }, { status: 400 });
 	}
 
 	const existingCompany = await prisma.company.findUnique({
@@ -19,7 +22,7 @@ export async function POST(req: Request) {
 
 	if (existingCompany) {
 		return NextResponse.json(
-			{ error: "This email is already being used" },
+			{ error: "Este email já está sendo usado" },
 			{ status: 400 }
 		);
 	}
