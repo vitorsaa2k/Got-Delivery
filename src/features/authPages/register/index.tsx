@@ -8,6 +8,7 @@ import {
 	EnvelopeSimpleIcon,
 	LockIcon,
 } from "@phosphor-icons/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -20,8 +21,10 @@ export default function RegisterForm() {
 	const [isComplete, setIsComplete] = useState(false);
 	const router = useRouter();
 	return (
-		<div className="py-6 px-8 rounded-2xl flex flex-col gap-2 border items-center lg:w-[480px] ">
-			<p className="text-2xl font-bold">Crie uma conta em segundos!</p>
+		<div className="py-6 px-8 rounded-2xl flex flex-col gap-2 border items-center">
+			<p className="text-3xl font-bold text-center">
+				Crie uma conta em segundos!
+			</p>
 			<label className="w-full flex flex-col items-center">
 				<p className="self-start">Nome da empresa</p>
 				<div className="relative w-full">
@@ -68,6 +71,9 @@ export default function RegisterForm() {
 					/>
 				</div>
 			</label>
+			<Link className="underline" href={"/login"}>
+				Já tenho uma conta
+			</Link>
 			<Button
 				disabled={isSubmiting}
 				className="hover:cursor-pointer py-6 w-full"
