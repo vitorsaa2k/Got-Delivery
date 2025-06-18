@@ -32,7 +32,7 @@ export default function RegisterForm() {
 					/>
 					<Input
 						className="pl-11 h-12"
-						placeholder="Ifood"
+						placeholder="Google"
 						onChange={e => setName(e.currentTarget.value)}
 					/>
 				</div>
