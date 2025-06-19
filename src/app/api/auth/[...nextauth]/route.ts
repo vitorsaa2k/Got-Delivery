@@ -17,10 +17,14 @@ const handler = NextAuth({
 				password: { label: "Password", type: "password" },
 			},
 			async authorize(credentials) {
-				if (!credentials) return null;
+				if (!credentials?.email || !credentials.password)
+					throw new Error("Preencha todos os campos");
 				const company = await prisma.company.findUnique({
 					where: { email: credentials.email },
 				});
+				if (!company) {
+					throw new Error("Não existe uma conta com este e-mail");
+				}
 
 				if (
 					company &&
@@ -29,7 +33,7 @@ const handler = NextAuth({
 				) {
 					return company;
 				}
-				return null;
+				throw new Error("Senha incorreta");
 			},
 		}),
 	],
