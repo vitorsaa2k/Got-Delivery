@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { hash } from "bcrypt";
+import { generateRandomCode } from "@/utils/generateRandomCode";
+import { sendVerificationEmail } from "@/lib/nodemailer";
 
 export async function POST(req: Request) {
 	const { email, password, name } = await req.json();
@@ -36,8 +38,22 @@ export async function POST(req: Request) {
 			password: hashedPassword,
 		},
 	});
+	const verificationCode = await prisma.verificationCode.create({
+		data: {
+			companyId: company.id,
+			verificationCode: generateRandomCode().toString(),
+		},
+	});
+	if (verificationCode.verificationCode) {
+		await sendVerificationEmail({
+			code: verificationCode.verificationCode,
+			userEmail: company.email,
+			token: verificationCode.id,
+		});
+	}
 	return NextResponse.json({
 		message: "Company created",
 		company,
+		verificationCode,
 	});
 }

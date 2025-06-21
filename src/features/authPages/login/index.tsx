@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { signIn, SignInResponse } from "next-auth/react";
 import { removeTimeFromDate } from "@/utils/formatDate";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -19,6 +19,21 @@ export default function LoginForm() {
 		new Date().toISOString()
 	)}T00:00:00.000Z`;
 	const router = useRouter();
+	function handleSignIn(res: SignInResponse | undefined) {
+		if (res) {
+			if (res.error) {
+				setIsSubmiting(false);
+				return toast(`${res.error}`);
+			}
+			if (!res.error && res.ok) {
+				setIsComplete(true);
+				toast("Sendo redirecionado para dashboard...");
+				return setTimeout(() => {
+					router.push(res.url ?? redirectUrl);
+				}, 1000);
+			}
+		}
+	}
 	return (
 		<div className="py-6 px-8 rounded-2xl flex flex-col gap-2 border items-center lg:w-[480px] ">
 			<p className="text-3xl text-center font-bold">Bem-vindo de volta!</p>
@@ -66,21 +81,7 @@ export default function LoginForm() {
 						password,
 						redirect: false,
 						callbackUrl: redirectUrl,
-					}).then(res => {
-						if (res) {
-							if (res.error) {
-								setIsSubmiting(false);
-								return toast(`${res.error}`);
-							}
-							if (!res.error && res.ok) {
-								setIsComplete(true);
-								toast("Sendo redirecionado para dashboard...");
-								return setTimeout(() => {
-									router.push(res.url ?? redirectUrl);
-								}, 1000);
-							}
-						}
-					});
+					}).then(handleSignIn);
 				}}
 			>
 				{isSubmiting ? (

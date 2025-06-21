@@ -85,7 +85,7 @@ export default function RegisterForm() {
 						.then(res => res.json())
 						.then((data: ApiResponse) => {
 							setIsComplete(true);
-
+							console.log(data);
 							if (data.error) {
 								setIsSubmiting(false);
 								toast(data.error);
@@ -93,7 +93,7 @@ export default function RegisterForm() {
 							}
 							setTimeout(() => {
 								setIsSubmiting(false);
-								router.push("/login");
+								router.push("/verify");
 							}, 1000);
 						});
 				}}
