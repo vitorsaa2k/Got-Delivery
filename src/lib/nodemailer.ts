@@ -5,8 +5,8 @@ export const transporter = nodemailer.createTransport({
 	port: 465,
 	secure: true,
 	auth: {
-		user: "vitoradriel66@gmail.com",
-		pass: "zyno incs mrxy wnsi",
+		user: process.env.EMAIL_NODEMAILER,
+		pass: process.env.APP_PASSWORD,
 	},
 });
 
@@ -20,7 +20,7 @@ export async function sendVerificationEmail({
 	token: string;
 }) {
 	return await transporter.sendMail({
-		from: `GotDelivery <vitoradriel66@gmail.com>`,
+		from: `GotDelivery <gotdeliverysup@gmail.com>`,
 		to: userEmail,
 		subject: "Verificação de e-mail",
 		html: `<h1>Verificação de email</h1>
