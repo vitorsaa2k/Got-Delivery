@@ -6,6 +6,7 @@ import { verifyAccountViaCode } from "@/services/verify";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { RequestCodeButton } from "./components/requestCodeButton";
+import { removeTimeFromDate } from "@/utils/formatDate";
 
 export default function VerifyForm() {
 	const router = useRouter();
@@ -17,7 +18,11 @@ export default function VerifyForm() {
 		await verifyAccountViaCode(code);
 		setIsComplete(true);
 		setTimeout(() => {
-			router.push("/login");
+			router.push(
+				`/delivery/date/${removeTimeFromDate(
+					new Date().toISOString()
+				)}T00:00:00.000Z`
+			);
 		}, 1000);
 	}
 
