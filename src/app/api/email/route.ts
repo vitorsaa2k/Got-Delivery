@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
 
 	const verificationCode = await prisma.verificationCode.update({
 		where: {
-			id: body.id,
+			companyId: body.id,
 		},
 		data: {
 			verificationCode: generateRandomCode().toString(),
