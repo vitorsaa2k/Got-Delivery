@@ -29,7 +29,7 @@ export default function VerifyForm() {
 	return (
 		<>
 			<h1 className="text-3xl font-bold">
-				Um e-mail de verificação incluindo um código foi enviado ao seu email.
+				O e-mail de verificação incluindo um código foi enviado ao seu email.
 			</h1>
 			<div className="flex flex-col items-center gap-2">
 				<label>
