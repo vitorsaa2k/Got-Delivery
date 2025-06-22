@@ -29,10 +29,16 @@ async function checkAccountIsVerified(email: string) {
 		.then(res => res.json())
 		.then((data: ApiResponse) => data);
 }
+async function makeAccountVerified(email: string) {
+	return await fetch(`http://localhost:3000/api/email/verify?email=${email}`)
+		.then(res => res.json())
+		.then((data: ApiResponse) => data);
+}
 
 export {
 	verifyAccountViaLink,
 	verifyAccountViaCode,
 	requestNewVerificationCode,
 	checkAccountIsVerified,
+	makeAccountVerified,
 };

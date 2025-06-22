@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { RequestCodeButton } from "./components/requestCodeButton";
 import { removeTimeFromDate } from "@/utils/formatDate";
+import { NoVerifyButton } from "./components/noVerifyButton";
 
 export default function VerifyForm() {
 	const router = useRouter();
@@ -27,15 +28,17 @@ export default function VerifyForm() {
 	}
 
 	return (
-		<>
-			<h1 className="text-3xl font-bold">
+		<div className="flex flex-col gap-2">
+			<h1 className="text-3xl font-bold text-center">
 				O e-mail de verificação incluindo um código foi enviado ao seu email.
 			</h1>
 			<div className="flex flex-col items-center gap-2">
-				<label>
+				<label className="flex max-md:flex-col whitespace-nowrap gap-2 items-center">
 					Código de verificação
 					<Input onChange={e => setCode(e.currentTarget.value)} />
+					<RequestCodeButton />
 				</label>
+
 				<Button
 					className="hover:cursor-pointer"
 					disabled={isLoading}
@@ -47,8 +50,8 @@ export default function VerifyForm() {
 						"Verificar"
 					)}
 				</Button>
-				<RequestCodeButton />
+				<NoVerifyButton />
 			</div>
-		</>
+		</div>
 	);
 }

@@ -23,4 +23,15 @@ function createDateInCorrectTimezone(date: string) {
 	return new Date(correctTimeZoneDate);
 }
 
-export { dateRemoveOneDay, dateAddOneDay, createDateInCorrectTimezone };
+function getCurrentDateWithNoTime() {
+	return `/delivery/date/${removeTimeFromDate(
+		new Date().toISOString()
+	)}T00:00:00.000Z`;
+}
+
+export {
+	dateRemoveOneDay,
+	dateAddOneDay,
+	createDateInCorrectTimezone,
+	getCurrentDateWithNoTime,
+};
