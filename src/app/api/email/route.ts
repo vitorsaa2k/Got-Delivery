@@ -31,8 +31,10 @@ export async function GET(req: NextRequest) {
 	}
 	return NextResponse.json(
 		{
-			message: "E-mail is verified",
-			ok: true,
+			data: {
+				message: "E-mail is verified",
+				ok: true,
+			},
 		},
 		{ status: 200 }
 	);
