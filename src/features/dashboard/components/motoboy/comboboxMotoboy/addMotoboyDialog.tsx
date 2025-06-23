@@ -28,10 +28,9 @@ export function AddMotoboyDialog() {
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>Adicionar Motoboy</DialogTitle>
-					<DialogDescription>
-						<AddMotoboyForm />
-					</DialogDescription>
+					<DialogDescription />
 				</DialogHeader>
+				<AddMotoboyForm setIsDialogOpen={setIsDialogOpen} />
 			</DialogContent>
 		</Dialog>
 	);
