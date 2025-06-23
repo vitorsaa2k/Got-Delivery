@@ -85,7 +85,6 @@ export default function RegisterForm() {
 						.then(res => res.json())
 						.then((data: ApiResponse) => {
 							setIsComplete(true);
-							console.log(data);
 							if (data.error) {
 								setIsSubmiting(false);
 								toast(data.error);
