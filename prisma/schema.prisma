@@ -36,3 +36,9 @@ model Company {
   motoboys   Motoboy[]
   Deliveries Delivery[]
 }
+
+model VerificationCode {
+  id               String  @id @default(auto()) @map("_id") @db.ObjectId
+  verificationCode String? @unique
+  companyId        String  @unique
+}

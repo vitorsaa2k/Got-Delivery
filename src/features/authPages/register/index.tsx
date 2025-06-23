@@ -3,11 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { ApiResponse } from "@/types/global/types";
+import { getCurrentDateDefaultTime } from "@/utils/manageDate";
 import {
 	BuildingsIcon,
 	EnvelopeSimpleIcon,
 	LockIcon,
 } from "@phosphor-icons/react";
+import { signIn, SignInResponse } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -19,7 +21,25 @@ export default function RegisterForm() {
 	const [name, setName] = useState("");
 	const [isSubmiting, setIsSubmiting] = useState(false);
 	const [isComplete, setIsComplete] = useState(false);
+	const redirectUrl = `/delivery/date/${getCurrentDateDefaultTime()}`;
 	const router = useRouter();
+
+	function handleSignIn(res: SignInResponse | undefined) {
+		if (res) {
+			if (res.error) {
+				setIsSubmiting(false);
+				return toast(`${res.error}`);
+			}
+			if (!res.error && res.ok) {
+				setIsComplete(true);
+				toast("Sendo redirecionado para dashboard...");
+				return setTimeout(() => {
+					router.push(res.url ?? redirectUrl);
+				}, 1000);
+			}
+		}
+	}
+
 	return (
 		<div className="py-6 px-8 rounded-2xl flex flex-col gap-2 border items-center">
 			<p className="text-3xl font-bold text-center">
@@ -85,16 +105,17 @@ export default function RegisterForm() {
 						.then(res => res.json())
 						.then((data: ApiResponse) => {
 							setIsComplete(true);
-
 							if (data.error) {
 								setIsSubmiting(false);
 								toast(data.error);
 								return;
 							}
-							setTimeout(() => {
-								setIsSubmiting(false);
-								router.push("/login");
-							}, 1000);
+							signIn("credentials", {
+								email,
+								password,
+								redirect: false,
+								callbackUrl: redirectUrl,
+							}).then(handleSignIn);
 						});
 				}}
 			>

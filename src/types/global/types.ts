@@ -18,11 +18,18 @@ export interface Delivery {
 
 export interface ApiResponse {
 	error?: string;
+	data: { verificationCode: VerificationCode };
 }
 
 export interface DashboardResume {
 	deliveriesLastWeek: Delivery[];
 	deliveriesLastMonth: Delivery[];
+}
+
+export interface VerificationCode {
+	id: string;
+	verificationCode: number;
+	companyId: string;
 }
 
 export type SourceType = "Ifood" | "PedeAi" | "WhatsApp";
