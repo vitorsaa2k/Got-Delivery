@@ -16,7 +16,7 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { useRouter } from "next/navigation";
-import { getCurrentDateWithNoTime } from "@/utils/manageDate";
+import { getCurrentDateDefaultTime } from "@/utils/manageDate";
 
 export function NoVerifyButton() {
 	const session = useSession();
@@ -30,7 +30,7 @@ export function NoVerifyButton() {
 		toast("Redirecionando para dashboard...");
 		setIsComplete(true);
 		setTimeout(() => {
-			router.push(`${getCurrentDateWithNoTime()}`);
+			router.push(`${getCurrentDateDefaultTime()}`);
 		}, 1000);
 		return;
 	}

@@ -26,6 +26,10 @@ export async function sendVerificationEmail({
 		html: `<h1>Verificação de email</h1>
 				<p>Caso esta ação não tenha sido realizada por você, apenas ignore este e-mail</p>
         <p>Código: <code>${code}</code></p>
-        <p>Link para verificação: <a target="_blank" href="http://localhost:3000/verify/${token}">Clique Aqui</a></p>`,
+        <p>Link para verificação: <a target="_blank" href="${
+					process.env.NODE_ENV === "production"
+						? process.env.PROD_URL
+						: "http://localhost:3000"
+				}/verify/${token}">Clique Aqui</a></p>`,
 	});
 }

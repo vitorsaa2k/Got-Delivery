@@ -54,6 +54,5 @@ export async function POST(req: Request) {
 	return NextResponse.json({
 		message: "Company created",
 		company,
-		verificationCode,
 	});
 }

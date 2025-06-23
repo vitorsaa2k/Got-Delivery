@@ -1,6 +1,7 @@
 "use client";
 import { Spinner } from "@/components/ui/spinner";
 import { verifyAccountViaLink } from "@/services/verify";
+import { getCurrentDateDefaultTime } from "@/utils/manageDate";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -13,7 +14,9 @@ export default function VerifyTokenPage() {
 		if (params.token) {
 			verifyAccountViaLink(`${params.token}`).then(() => {
 				setIsComplete(true);
-				router.push("/login");
+				setTimeout(() => {
+					router.push(`/delivery/date/${getCurrentDateDefaultTime()}`);
+				}, 500);
 			});
 		}
 	}, [params, router]);

@@ -22,16 +22,16 @@ function createDateInCorrectTimezone(date: string) {
 	const correctTimeZoneDate = `${removeTimeFromDate(date)}T00:00:00-03:00`;
 	return new Date(correctTimeZoneDate);
 }
-
-function getCurrentDateWithNoTime() {
-	return `/delivery/date/${removeTimeFromDate(
-		new Date().toISOString()
-	)}T00:00:00.000Z`;
+/**
+ * Returns an ISOString date with time set to 0
+ */
+function getCurrentDateDefaultTime() {
+	return `${removeTimeFromDate(new Date().toISOString())}T00:00:00.000Z`;
 }
 
 export {
 	dateRemoveOneDay,
 	dateAddOneDay,
 	createDateInCorrectTimezone,
-	getCurrentDateWithNoTime,
+	getCurrentDateDefaultTime,
 };

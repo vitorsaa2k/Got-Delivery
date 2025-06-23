@@ -8,7 +8,7 @@ import { useState } from "react";
 import { RequestCodeButton } from "./components/requestCodeButton";
 import { NoVerifyButton } from "./components/noVerifyButton";
 import { VerifyHeader } from "./components/header";
-import { getCurrentDateWithNoTime } from "@/utils/manageDate";
+import { getCurrentDateDefaultTime } from "@/utils/manageDate";
 
 export default function VerifyForm() {
 	const router = useRouter();
@@ -19,9 +19,8 @@ export default function VerifyForm() {
 		setIsLoading(true);
 		await verifyAccountViaCode(code);
 		setIsComplete(true);
-		setTimeout(() => {
-			router.push(`/delivery/date/${getCurrentDateWithNoTime()}`);
-		}, 1000);
+		router.push(`/delivery/date/${getCurrentDateDefaultTime()}`);
+		setTimeout(() => {}, 1000);
 	}
 
 	return (
