@@ -6,8 +6,9 @@ import { verifyAccountViaCode } from "@/services/verify";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { RequestCodeButton } from "./components/requestCodeButton";
-import { removeTimeFromDate } from "@/utils/formatDate";
 import { NoVerifyButton } from "./components/noVerifyButton";
+import { VerifyHeader } from "./components/header";
+import { getCurrentDateWithNoTime } from "@/utils/manageDate";
 
 export default function VerifyForm() {
 	const router = useRouter();
@@ -19,16 +20,13 @@ export default function VerifyForm() {
 		await verifyAccountViaCode(code);
 		setIsComplete(true);
 		setTimeout(() => {
-			router.push(
-				`/delivery/date/${removeTimeFromDate(
-					new Date().toISOString()
-				)}T00:00:00.000Z`
-			);
+			router.push(`/delivery/date/${getCurrentDateWithNoTime()}`);
 		}, 1000);
 	}
 
 	return (
 		<div className="flex flex-col gap-2">
+			<VerifyHeader />
 			<h1 className="text-3xl font-bold text-center">
 				O e-mail de verificação incluindo um código foi enviado ao seu email.
 			</h1>
