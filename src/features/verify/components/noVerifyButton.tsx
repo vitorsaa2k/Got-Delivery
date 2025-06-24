@@ -30,7 +30,7 @@ export function NoVerifyButton() {
 		toast("Redirecionando para dashboard...");
 		setIsComplete(true);
 		setTimeout(() => {
-			router.push(`${getCurrentDateDefaultTime()}`);
+			router.push(`/delivery/date/${getCurrentDateDefaultTime()}`);
 		}, 1000);
 		return;
 	}
