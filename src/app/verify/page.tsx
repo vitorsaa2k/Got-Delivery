@@ -1,5 +1,5 @@
 import VerifyForm from "@/features/verify";
-import { checkAccountIsVerified } from "@/services/verify";
+import { checkIsAccountVerifiedSSR } from "@/lib/server/checkVerify";
 import { getCurrentDateDefaultTime } from "@/utils/manageDate";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -9,8 +9,8 @@ export default async function VerifyPage() {
 	if (!session) {
 		redirect("/login");
 	}
-	const isVerified = await checkAccountIsVerified(session.user.email!);
-	if (isVerified.data) {
+	const isVerified = await checkIsAccountVerifiedSSR(session);
+	if (isVerified.ok) {
 		redirect(`/delivery/date/${getCurrentDateDefaultTime()}`);
 	}
 	return (

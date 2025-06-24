@@ -24,13 +24,8 @@ async function requestNewVerificationCode(id: string, email: string) {
 		.then(data => data);
 }
 
-async function checkAccountIsVerified(email: string) {
-	return await fetch(`http://localhost:3000/api/email?email=${email}`)
-		.then(res => res.json())
-		.then((data: ApiResponse) => data);
-}
 async function makeAccountVerified(email: string) {
-	return await fetch(`http://localhost:3000/api/email/verify?email=${email}`)
+	return await fetch(`/api/email/verify?email=${email}`)
 		.then(res => res.json())
 		.then((data: ApiResponse) => data);
 }
@@ -39,6 +34,5 @@ export {
 	verifyAccountViaLink,
 	verifyAccountViaCode,
 	requestNewVerificationCode,
-	checkAccountIsVerified,
 	makeAccountVerified,
 };
