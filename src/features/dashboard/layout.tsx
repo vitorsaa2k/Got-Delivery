@@ -2,15 +2,15 @@ import { ReactNode } from "react";
 import { Sidebar } from "./components/sidebar";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { checkAccountIsVerified } from "@/services/verify";
+import { checkIsAccountVerifiedSSR } from "@/lib/server/checkVerify";
 
 export async function DashboardLayout({ children }: { children: ReactNode }) {
 	const session = await getServerSession();
 	if (!session) {
 		redirect("/login");
 	}
-	const isVerified = await checkAccountIsVerified(session.user.email!);
-	if (isVerified.error) {
+	const isVerified = await checkIsAccountVerifiedSSR(session);
+	if (!isVerified.ok) {
 		redirect("/verify");
 	}
 	return (
