@@ -21,6 +21,14 @@ export interface ApiResponse {
 	data: { verificationCode: VerificationCode };
 }
 
+export interface RegisterResponse {
+	error?: {
+		email?: string[];
+		name?: string[];
+		password?: string[];
+	};
+}
+
 export interface DashboardResume {
 	deliveriesLastWeek: Delivery[];
 	deliveriesLastMonth: Delivery[];
