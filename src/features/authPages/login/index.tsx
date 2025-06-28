@@ -12,14 +12,17 @@ import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import { CompanyLogin } from "@/lib/zod/company";
 import * as z from "zod/v4";
+import { InputError } from "@/components/ui/inputError";
 
 export default function LoginForm() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [isSubmiting, setIsSubmiting] = useState(false);
 	const [isComplete, setIsComplete] = useState(false);
-	const [inputError, setInputError] = useState<null | string>();
-	const [passwordError, setPasswordError] = useState<null | string>();
+	const [inputError, setInputError] = useState<null | string[] | undefined>();
+	const [passwordError, setPasswordError] = useState<
+		null | string[] | undefined
+	>();
 
 	const redirectUrl = `/delivery/date/${removeTimeFromDate(
 		new Date().toISOString()
@@ -30,9 +33,9 @@ export default function LoginForm() {
 			if (res.error) {
 				setIsSubmiting(false);
 				if (res.error.toLowerCase().includes("e-mail")) {
-					setInputError(res.error);
+					setInputError([res.error]);
 				} else {
-					setPasswordError(res.error);
+					setPasswordError([res.error]);
 				}
 				return toast(`${res.error}`);
 			}
@@ -50,7 +53,7 @@ export default function LoginForm() {
 	function handleSubmit() {
 		const parse = CompanyLogin.safeParse({ email, password });
 		if (parse.error) {
-			setInputError(z.flattenError(parse.error!).fieldErrors.email![0]);
+			setInputError(z.flattenError(parse.error).fieldErrors.email);
 			return;
 		}
 		setInputError(null);
@@ -83,11 +86,8 @@ export default function LoginForm() {
 						onChange={e => setEmail(e.currentTarget.value)}
 					/>
 				</div>
-				{inputError && (
-					<div className="flex self-start text-red-500 text-[12px]">
-						{inputError}
-					</div>
-				)}
+
+				<InputError inputError={inputError} />
 			</label>
 			<label className="w-full flex flex-col items-center">
 				<p className="self-start">Senha</p>
@@ -107,11 +107,7 @@ export default function LoginForm() {
 						onChange={e => setPassword(e.currentTarget.value)}
 					/>
 				</div>
-				{passwordError && (
-					<div className="flex self-start text-red-500 text-[12px]">
-						{passwordError}
-					</div>
-				)}
+				<InputError inputError={passwordError} />
 			</label>
 			<Link className="underline" href="/register">
 				Não tenho uma conta
