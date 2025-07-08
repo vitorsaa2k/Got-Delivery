@@ -1,5 +1,5 @@
 import Image from "next/image";
-import LogoIcon from "../../../../../public/logoIcon.png";
+import LogoIcon from "../../../../public/logoIcon.png";
 
 export function Logo() {
 	return (
