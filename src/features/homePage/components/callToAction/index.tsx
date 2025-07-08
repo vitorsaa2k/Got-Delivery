@@ -5,15 +5,10 @@ export function CallToAction() {
 		<div className="flex flex-col items-center gap-8">
 			<div>
 				<p className="flex text-[64px] font-extrabold leading-19 justify-center text-center">
-					Entregue com inteligência.
-					<br />
-					Gerencie com rapidez.
+					Cansado de anotar entregas no papel?
 				</p>
 				<p className="text-center text-[1.25rem]">
-					Uma única plataforma para gerenciar entregas e acompanhar seu
-					desempenho.
-					<br />
-					Decisões inteligentes, entregas mais rápidas.
+					Comece a usar GotDelivery e diga adeus ao papel e caneta.
 				</p>
 			</div>
 			<CTAButton />

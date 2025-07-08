@@ -1,6 +1,7 @@
-import { CallToAction } from "./callToAction";
-import { HomePageHeader } from "./header";
-import { FirstSection } from "./sections/section1";
+import { CallToAction } from "./components/callToAction";
+import { HomePageHeader } from "../../components/header";
+import { FirstSection } from "./components/sections/section1";
+import { DailyResumeSection } from "./components/sections/dailyResumeSection";
 
 export function HomePage() {
 	return (
@@ -8,6 +9,7 @@ export function HomePage() {
 			<HomePageHeader />
 			<CallToAction />
 			<FirstSection />
+			<DailyResumeSection />
 		</main>
 	);
 }
