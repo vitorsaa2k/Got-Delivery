@@ -44,7 +44,8 @@ export default function RegisterForm() {
 		}
 	}
 
-	function handleSubmit() {
+	function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
+		e.preventDefault();
 		const parse = CompanyRegister.safeParse({ name, email, password });
 		if (parse.error && !parse.success) {
 			const fieldErrors = z.flattenError(parse.error).fieldErrors;
@@ -81,7 +82,7 @@ export default function RegisterForm() {
 	}
 
 	return (
-		<div className="py-6 px-8 rounded-2xl flex flex-col gap-2 border items-center">
+		<form className="py-6 px-8 rounded-2xl flex flex-col gap-2 border items-center">
 			<p className="text-3xl font-bold text-center">
 				Crie uma conta em segundos!
 			</p>
@@ -105,6 +106,6 @@ export default function RegisterForm() {
 					"Registrar"
 				)}
 			</Button>
-		</div>
+		</form>
 	);
 }

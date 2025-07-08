@@ -50,7 +50,8 @@ export default function LoginForm() {
 			}
 		}
 	}
-	function handleSubmit() {
+	function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
+		e.preventDefault();
 		const parse = CompanyLogin.safeParse({ email, password });
 		if (parse.error) {
 			setInputError(z.flattenError(parse.error).fieldErrors.email);
@@ -67,7 +68,7 @@ export default function LoginForm() {
 		}).then(handleSignIn);
 	}
 	return (
-		<div className="py-6 px-8 rounded-2xl flex flex-col gap-2 border items-center lg:w-[480px] ">
+		<form className="py-6 px-8 rounded-2xl flex flex-col gap-2 border items-center lg:w-[480px] ">
 			<p className="text-3xl text-center font-bold">Bem-vindo de volta!</p>
 			<label className="w-full flex flex-col items-center">
 				<p className="self-start">Email</p>
@@ -123,6 +124,6 @@ export default function LoginForm() {
 					"Fazer Login"
 				)}
 			</Button>
-		</div>
+		</form>
 	);
 }
