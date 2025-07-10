@@ -1,5 +1,5 @@
 import { CreateDelivery } from "@/types/global/create";
-import { DashboardResume, Delivery } from "@/types/global/types";
+import { Delivery } from "@/types/global/types";
 
 async function fetchDeliveryById(id: string): Promise<Delivery> {
 	const delivery = await fetch(`/api/delivery/${id}`)
@@ -37,18 +37,10 @@ async function deleteDelivery(delivery: Delivery) {
 		.catch(err => console.log(err));
 }
 
-async function fetchDeliveryResume(id: string) {
-	return await fetch(`/api/delivery/resume?id=${id}`)
-		.then(res => res.json())
-		.then((data: DashboardResume) => data)
-		.catch(err => console.log(err));
-}
-
 export {
 	fetchDeliveryById,
 	fetchAllDeliveriesByDate,
 	postDelivery,
 	deleteDelivery,
 	fetchAllDeliveriesByDateAndId,
-	fetchDeliveryResume,
 };

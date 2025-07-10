@@ -29,11 +29,6 @@ export interface RegisterResponse {
 	};
 }
 
-export interface DashboardResume {
-	deliveriesLastWeek: Delivery[];
-	deliveriesLastMonth: Delivery[];
-}
-
 export interface VerificationCode {
 	id: string;
 	verificationCode: number;
