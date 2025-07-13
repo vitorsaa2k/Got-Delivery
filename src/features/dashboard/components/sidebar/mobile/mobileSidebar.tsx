@@ -2,20 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Hamburguer } from "./hamburguer";
-import { SidebarItem } from "../sideBarItem";
-import {
-	HouseIcon,
-	MotorcycleIcon,
-	PackageIcon,
-	XIcon,
-} from "@phosphor-icons/react";
-import { removeTimeFromDate } from "@/utils/formatDate";
+import { XIcon } from "@phosphor-icons/react";
 import { SidebarHeader } from "../header";
 import { Overlay } from "./overlay";
+import { NavItems } from "../navItems";
 
 export function MobileSidebar() {
 	const [showSidebar, SetShowSidebar] = useState(false);
-	const [currentUrl, setCurrentUrl] = useState("");
 	const ref = useRef<HTMLDivElement>(null);
 	const hideOverlay = () => {
 		const overlay = ref.current;
@@ -47,7 +40,6 @@ export function MobileSidebar() {
 		overlay.classList.add("opacity-100");
 	};
 	useEffect(() => {
-		setCurrentUrl(window.location.href);
 		hideOverlay();
 	}, []);
 	return (
@@ -72,25 +64,7 @@ export function MobileSidebar() {
 				>
 					<XIcon size={20} />
 				</button>
-				<nav className="flex flex-col items-center gap-2 ">
-					<SidebarItem href="/dashboard" currentUrl={currentUrl}>
-						<HouseIcon size={20} />
-						Home
-					</SidebarItem>
-					<SidebarItem
-						href={`/delivery/date/${removeTimeFromDate(
-							new Date().toISOString()
-						)}T00:00:00.000Z`}
-						currentUrl={currentUrl}
-					>
-						<PackageIcon size={20} />
-						Deliveries
-					</SidebarItem>
-					<SidebarItem currentUrl={currentUrl} href={"/motoboy"}>
-						<MotorcycleIcon size={20} />
-						Motoboys
-					</SidebarItem>
-				</nav>
+				<NavItems />
 			</div>
 			<Hamburguer setShowSidebar={SetShowSidebar} showOverlay={showOverlay} />
 		</div>

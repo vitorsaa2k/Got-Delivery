@@ -1,3 +1,4 @@
+"use client";
 import { SignOutIcon } from "@phosphor-icons/react/dist/ssr";
 import { signOut, useSession } from "next-auth/react";
 
