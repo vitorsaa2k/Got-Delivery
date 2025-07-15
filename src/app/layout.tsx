@@ -16,7 +16,6 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-	title: "Got Delivery",
 	description:
 		"Cansado de anotar suas entregas no papel? Acesse suas entregas em qualquer lugar e obtenha resumos diários.",
 	openGraph: {
