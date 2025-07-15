@@ -24,7 +24,6 @@ export const metadata: Metadata = {
 		url: `${process.env.PROD_URL}`,
 		description:
 			"Cansado de anotar suas entregas no papel? Acesse suas entregas em qualquer lugar e obtenha resumos diários.",
-		siteName: "Got Delivery",
 		images: [
 			{
 				url: "https://cdn.discordapp.com/attachments/1393658899311366304/1394626805096255601/image.png?ex=68777eed&is=68762d6d&hm=5334a1e081a543b53db5d9a36caab1cfe67e4b12101faad2124e42a34aa2903b&",
