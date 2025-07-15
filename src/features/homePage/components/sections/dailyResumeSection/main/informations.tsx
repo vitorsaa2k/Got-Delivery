@@ -1,10 +1,12 @@
 export function Informations() {
 	return (
-		<ul className="text-2xl lg:list-disc max-lg:p-2 flex flex-col gap-1">
+		<div className="text-2xl max-lg:p-2">
 			Informações como:
-			<li>Total gasto com entregas.</li>
-			<li>Total de entregas feitas no dia.</li>
-			<li>Quanto deve ser pago pra cada motoboy naquele dia.</li>
-		</ul>
+			<ul className=" lg:list-disc flex flex-col gap-1">
+				<li>Total gasto com entregas.</li>
+				<li>Total de entregas feitas no dia.</li>
+				<li>Quanto deve ser pago pra cada motoboy naquele dia.</li>
+			</ul>
+		</div>
 	);
 }
