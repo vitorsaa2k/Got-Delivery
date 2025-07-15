@@ -22,7 +22,6 @@ export const metadata: Metadata = {
 	openGraph: {
 		type: "website",
 		url: `${process.env.PROD_URL}`,
-		title: "Got Delivery",
 		description:
 			"Cansado de anotar suas entregas no papel? Acesse suas entregas em qualquer lugar e obtenha resumos diários.",
 		siteName: "Got Delivery",
