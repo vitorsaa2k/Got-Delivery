@@ -10,7 +10,7 @@ Some of the tecnologies used:
 - TanStack Query (Server State Management)
 
 ### Database
-[![database](https://skillicons.dev/icons?i=mongodb)](https://skillicons.dev)
+[![database](https://skillicons.dev/icons?i=mongodb,prisma)](https://skillicons.dev)
 
 MongoDb Atlas is being used for storing user data. Together with Prisma for type-safe database queries.
 
