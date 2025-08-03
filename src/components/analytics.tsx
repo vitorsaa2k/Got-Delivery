@@ -9,7 +9,6 @@ export function Analytics() {
 	const searchParams = useSearchParams();
 
 	useEffect(() => {
-		console.log(GA_MEASUREMENT_ID);
 		if (!GA_MEASUREMENT_ID)
 			throw new Error("Google Measurement ID not provided in the .env file");
 		const url = pathname + searchParams.toString();
