@@ -2,13 +2,14 @@
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
-const GA_MEASUREMENT_ID = process.env.GA_MEASUREMENT_ID;
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
 export function Analytics() {
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
 
 	useEffect(() => {
+		console.log(GA_MEASUREMENT_ID);
 		if (!GA_MEASUREMENT_ID)
 			throw new Error("Google Measurement ID not provided in the .env file");
 		const url = pathname + searchParams.toString();
