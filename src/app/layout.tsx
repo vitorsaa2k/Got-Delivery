@@ -6,6 +6,7 @@ import Providers from "./providers";
 import { Footer } from "@/components/footer";
 import Script from "next/script";
 import { Analytics } from "@/components/analytics";
+import { Suspense } from "react";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -51,6 +52,16 @@ export default function RootLayout({
 				async
 				src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
 			></Script>
+			<Script
+				id="google-tag"
+				dangerouslySetInnerHTML={{
+					__html: ` window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');`,
+				}}
+			/>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
@@ -58,7 +69,9 @@ export default function RootLayout({
 					{children}
 					<Footer />
 					<Toaster />
-					<Analytics />
+					<Suspense>
+						<Analytics />
+					</Suspense>
 				</Providers>
 			</body>
 		</html>
