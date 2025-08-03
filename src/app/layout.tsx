@@ -4,6 +4,8 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import Providers from "./providers";
 import { Footer } from "@/components/footer";
+import Script from "next/script";
+import { Analytics } from "@/components/analytics";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -45,6 +47,20 @@ export default function RootLayout({
 				name="google-site-verification"
 				content="4dDZzjSXW4Uvd0_Fdjry_wqWaVwfx-HXd5xUt064e_I"
 			/>
+			<Script
+				async
+				src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GA_MEASUREMENT_ID}`}
+			></Script>
+			<Script
+				id="google-tag"
+				dangerouslySetInnerHTML={{
+					__html: ` window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '${process.env.GA_MEASUREMENT_ID}');`,
+				}}
+			/>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
@@ -52,6 +68,7 @@ export default function RootLayout({
 					{children}
 					<Footer />
 					<Toaster />
+					<Analytics />
 				</Providers>
 			</body>
 		</html>
