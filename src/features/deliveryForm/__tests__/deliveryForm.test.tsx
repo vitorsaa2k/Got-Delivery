@@ -112,4 +112,15 @@ describe("delivery form fields", () => {
 		expect(result.queryByTestId("itemWhatsapp")).not.toBeInTheDocument();
 		expect(result.getByText("Ifood")).toBeInTheDocument();
 	});
+
+	test("If no motoboy is found it should show addMotoboy button", async () => {
+		const result = renderWithProviders(<DeliveryForm />);
+		const selectMotoboy = result.getByTestId("moboboyCombobox");
+		fireEvent.click(selectMotoboy);
+		const noMotoboyFound = result.getByText("Nenhum Motoboy encontrado");
+		expect(noMotoboyFound).toBeInTheDocument();
+
+		const addMotoboyButton = result.getByTestId("addMotoboyButton");
+		expect(addMotoboyButton).toBeInTheDocument();
+	});
 });
