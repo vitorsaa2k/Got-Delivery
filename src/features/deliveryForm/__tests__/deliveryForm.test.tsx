@@ -95,4 +95,21 @@ describe("delivery form fields", () => {
 		expect(result.queryByTestId("itemWhatsapp")).not.toBeInTheDocument();
 		expect(result.getByText("WhatsApp")).toBeInTheDocument();
 	});
+
+	test("it's possible to select Ifood", async () => {
+		const result = renderWithProviders(<DeliveryForm />);
+		const sourceSelector = result.getByTestId("sourceSelect");
+		fireEvent.click(sourceSelector);
+		expect(result.getByTestId("itemIfood")).toBeInTheDocument();
+		expect(result.getByTestId("itemPedeai")).toBeInTheDocument();
+		expect(result.getByTestId("itemWhatsapp")).toBeInTheDocument();
+
+		const pedeaiSelector = result.getByTestId("itemIfood");
+		fireEvent.click(pedeaiSelector);
+
+		expect(result.queryByTestId("itemIfood")).not.toBeInTheDocument();
+		expect(result.queryByTestId("itemPedeai")).not.toBeInTheDocument();
+		expect(result.queryByTestId("itemWhatsapp")).not.toBeInTheDocument();
+		expect(result.getByText("Ifood")).toBeInTheDocument();
+	});
 });
