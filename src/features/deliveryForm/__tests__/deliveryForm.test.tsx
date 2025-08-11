@@ -1,11 +1,6 @@
 import { DeliveryForm } from "..";
 import { renderWithProviders } from "@/tests/utils";
-import { mockFetch } from "../../../../__mocks__/mock-fetch";
 import { fireEvent } from "@testing-library/dom";
-
-beforeAll(() => {
-	window.fetch = mockFetch({});
-});
 
 describe("delivery form fields", () => {
 	test("form fields are in the document", async () => {
