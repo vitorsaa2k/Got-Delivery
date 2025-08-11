@@ -17,6 +17,7 @@ export function NeighborhoodInput({
 				className="bg-white text-black"
 				type="text"
 				name="neighborhood"
+				data-testid="neighborhoodInput"
 				value={neighborhood}
 				onChange={handleNeighborhoodChange}
 			/>

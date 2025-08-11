@@ -41,6 +41,7 @@ export function ComboboxMotoboy() {
 				<Button
 					variant="outline"
 					role="combobox"
+					data-testid="moboboyCombobox"
 					aria-expanded={open}
 					className="w-[200px] justify-between border border-slate-400 hover:cursor-pointer"
 				>

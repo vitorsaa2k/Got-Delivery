@@ -19,6 +19,7 @@ export function AddMotoboyDialog() {
 		<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
 			<DialogTrigger asChild>
 				<Button
+					data-testid="addMotoboyButton"
 					onClick={() => setIsDialogOpen(state => !state)}
 					className="hover:cursor-pointer"
 				>

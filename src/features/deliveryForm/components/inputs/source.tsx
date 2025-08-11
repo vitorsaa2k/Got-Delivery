@@ -20,13 +20,19 @@ export function DeliverySourceInput({
 		<>
 			<label>Plataforma</label>
 			<Select value={value} onValueChange={handleSelectChange}>
-				<SelectTrigger className="w-full">
+				<SelectTrigger data-testid="sourceSelect" className="w-full">
 					<SelectValue placeholder="Plataforma" />
 				</SelectTrigger>
-				<SelectContent>
-					<SelectItem value="Ifood">Ifood</SelectItem>
-					<SelectItem value="PedeAi">PedeAi</SelectItem>
-					<SelectItem value="WhatsApp">WhatsApp</SelectItem>
+				<SelectContent data-testid="sourceContent">
+					<SelectItem data-testid="itemIfood" value="Ifood">
+						Ifood
+					</SelectItem>
+					<SelectItem data-testid="itemPedeai" value="PedeAi">
+						PedeAi
+					</SelectItem>
+					<SelectItem data-testid="itemWhatsapp" value="WhatsApp">
+						WhatsApp
+					</SelectItem>
 				</SelectContent>
 			</Select>
 		</>

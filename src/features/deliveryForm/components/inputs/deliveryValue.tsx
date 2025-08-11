@@ -11,11 +11,13 @@ export function DeliveryValueInput({
 }: DeliveryValueInputTypes) {
 	return (
 		<>
-			<label>Valor</label>
+			<label htmlFor="deliveryValue">Valor</label>
 			<Input
 				className="bg-white text-black"
 				type="text"
 				name="deliveryValue"
+				id="deliveryValue"
+				data-testid="deliveryValueInput"
 				value={deliveryValue}
 				onChange={handleDeliveryValueChange}
 			/>
