@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { CompanyLogin } from "@/lib/zod/company";
 import * as z from "zod/v4";
 import { InputError } from "@/components/ui/inputError";
+import { GoogleLogin } from "./components/googleLogin";
 
 export default function LoginForm() {
 	const [email, setEmail] = useState("");
@@ -113,6 +114,7 @@ export default function LoginForm() {
 			<Link className="underline" href="/register">
 				Não tenho uma conta
 			</Link>
+			<GoogleLogin />
 			<Button
 				disabled={isSubmiting}
 				className="hover:cursor-pointer py-6 w-full"
