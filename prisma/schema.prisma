@@ -45,7 +45,7 @@ model VerificationCode {
 
 model Account {
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String   @db.ObjectId
+  userId            String   @unique @db.ObjectId
   type              String
   provider          String
   providerAccountId String
