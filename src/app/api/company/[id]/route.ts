@@ -13,5 +13,5 @@ export async function PATCH(
 			name: body.name,
 		},
 	});
-	NextResponse.json({ ok: true, data: company }, { status: 200 });
+	return NextResponse.json({ ok: true, data: company }, { status: 200 });
 }
