@@ -55,6 +55,12 @@ export const authOptions: AuthOptions = {
 			if (session.user) {
 				session.user.id = token.sub ?? token.id;
 			}
+			const company = await prisma.company.findUnique({
+				where: { id: session.user.id },
+			});
+			if (company) {
+				return { ...session, user: { ...session.user, name: company.name } };
+			}
 			return session;
 		},
 		async jwt({ token, user }) {
