@@ -12,7 +12,7 @@ export function DeliveryTable() {
 		state => state.updateDeliveryList
 	);
 	const params = useParams();
-	const { data: deliveryList } = useQuery({
+	const { data: deliveryList, isLoading } = useQuery({
 		queryKey: ["deliveryList"],
 		queryFn: async () => {
 			const deliveryList = await fetchAllDeliveriesByDateAndId(
@@ -23,10 +23,10 @@ export function DeliveryTable() {
 			return deliveryList;
 		},
 	});
-	if (!deliveryList) return <></>;
+	if (isLoading) return <p>Carregando...</p>;
 	return (
-		<div className="flex gap-2 flex-wrap max-sm:justify-center">
-			{deliveryList.map(delivery => (
+		<div data-testid="delivery-table" className="flex gap-2 flex-wrap max-sm:justify-center">
+			{deliveryList?.map(delivery => (
 				<ItemDelivery key={delivery.id} delivery={delivery} />
 			))}
 		</div>
