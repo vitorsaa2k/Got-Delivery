@@ -21,11 +21,11 @@ export async function GET(
 }
 
 export async function POST(req: NextRequest) {
-	const body = await req.json();
+	const body = await req.json() as {code: string};
 	if (!body.code) {
 		return NextResponse.json({ error: "Code not provided" }, { status: 400 });
 	}
-	await prisma.verificationCode.update({
+	const verificationCode = await prisma.verificationCode.updateMany({
 		where: {
 			verificationCode: body.code,
 		},
@@ -33,5 +33,8 @@ export async function POST(req: NextRequest) {
 			verificationCode: null,
 		},
 	});
+	if(verificationCode.count === 0) {
+		return NextResponse.json({ error: "Wrong code provided", }, { status: 400 });
+	}
 	return NextResponse.json({ message: "E-mail verified" }, { status: 200 });
 }
